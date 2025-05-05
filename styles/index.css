@@ -4,8 +4,9 @@ https://coolors.co/0e7c7b-17bebb-d4f4dd-b2abf2-0f0326*/
 :root {
     --background-color1: #0e7c7b;
     --background-color2: #17bebb;
-    --fontcolor1: #d4f4dd;
+    --fontcolor1: white;
     --fontcolor2: #0f0326;
+    --fontcolor3: #d4f4dd;
     --color: #b2abf2;
 }
 
@@ -87,15 +88,39 @@ h1 img {
 
 main {
     display: grid;
-    grid-template-columns: auto 1fr;
+    /* margin: 0 auto; */
+    width: 600px;
+
 }
 
 section {
+    display: grid;
     border: 1px solid var(--fontcolor2);
-    padding-right: 1rem;
-    padding-left: 1rem;
-    -bottom: 2rem;
+    margin-bottom: 1rem;  
+    margin-left: 1rem;
+    margin-right: 1rem;
 
+}
+
+section h2 {
+    background-color: var(--background-color1);
+    color: var(--fontcolor1);
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 1rem;
+    
+    height: 27.5px;
+}
+
+section img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    margin-bottom: 5px;
+    
 }
 
 
