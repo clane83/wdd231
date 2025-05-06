@@ -144,6 +144,20 @@ section img {
     
 }
 
+section:nth-child(3) ul {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+section:nth-child(3) li{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    border: 1px solid var(--fontcolor2);
+    margin: 5px;
+    font-size: larger;
+    justify-content: center;
+}
 
 /* Footer Section */
 
