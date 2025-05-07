@@ -8,6 +8,15 @@ https://coolors.co/0e7c7b-17bebb-d4f4dd-b2abf2-0f0326*/
     --fontcolor2: #0f0326;
     --fontcolor3: #d4f4dd;
     --color: #b2abf2;
+    --font-family: "Roboto", sans-serif;
+    --font-weight: 400;
+    --small-font-weight: 200;
+
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--small-font-weight);
 }
 
 header {
