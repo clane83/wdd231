@@ -129,26 +129,23 @@ section:nth-child(3) {
 
 }
 
-section:nth-child(3) h2,ul{
+section:nth-child(3) h2,ul,div{
     grid-column: 1 / 4;
 }
 
-section:nth-child(3) ul {
+
+#course-container, #course-wdd-card, #course-cse-card, .subject-list {
     display: grid;
-    grid-template-columns: auto auto auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 1rem; 
+    padding: 1rem; 
 }
 
-section:nth-child(3) li {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    border: 1px solid var(--fontcolor2);
-    margin: 5px;
-    font-size: medium;
-    justify-content: center;
-
+#course-container, #course-wdd-card, #course-cse-card li, .subject-list li {
+    list-style: none; 
+    padding: 1rem; 
+    text-align: center;  
+    border-radius: 5px; 
 }
 
 
