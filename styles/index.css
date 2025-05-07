@@ -16,7 +16,7 @@ https://coolors.co/0e7c7b-17bebb-d4f4dd-b2abf2-0f0326*/
 
 body {
     font-family: var(--font-family);
-    font-size: var(--small-font-weight);
+    /* font-size: var(--small-font-weight); */
 }
 
 header {
