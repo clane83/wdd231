@@ -82,6 +82,13 @@ h1 {
     display: block;
 }
 
+.navigation a:hover {
+    color: var(--hover-background-color); 
+    background-color: var(--nav-background-color); 
+    border-radius: 5px; 
+}
+
+
 footer {
     background-color: var(--header-background-color);
 }
