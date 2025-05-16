@@ -1,29 +1,44 @@
 @media screen and (min-width: 500px) {
-    
-      #menu {
-        display: none; 
-      }
+  .header-container {
+      display: grid; /* Use grid layout for larger screens */
+      grid-template-columns: auto 1fr;
+      grid-template-rows: 1fr 50px;
+      align-items: center;
+  }
 
-      header{
-    
-        height: auto;
-      }
-  
-      .navigation {
-        display: flex;
-        flex-direction: row !important;
-        background-color: var(--header-background-color);
-       
-        margin-left: auto;
-        margin-right: 5px;
-        
+  header img {
+      grid-column: 1 / 2;
+      max-height: 150px;
+  }
 
-    }
-  
-      .navigation a {
-        display: block;
-        flex: 1 1 auto%;
-      } 
-  
-  
+  h1 {
+      grid-column: 2 / 3;
+      margin: 0 10px;
+      text-align: left; /* Align text to the left for larger screens */
+  }
+
+  #menu {
+      display: none; /* Hide the hamburger menu on larger screens */
+  }
+
+  .navigation {
+      grid-row: 2/3;
+      display: flex; /* Always show navigation on larger screens */
+      flex-direction: row; /* Arrange links horizontally */
+      position: absolute; /*Remove absolute positioni */
+      background-color: transparent; /* Remove background color */
+      bottom: 0;
+      right:0;
+      top: 0;
+      margin-top: 0;
+      padding-bottom: 10px;
+      width: auto;
+      height: 50px;
+
+  }
+
+  .navigation a {
+      display: block; /* Ensure links are visible */
+      padding: 0 15px;
+  }
 }
