@@ -1,0 +1,87 @@
+
+:root {
+    --font-family: "Noto Sans", sans-serif;
+    /* font-optical-sizing: auto; */
+    --medium-font-weight: 400;
+    --larger-font-weight: 600;
+    --larger-font-style: semibold;
+    --header-background-color: #edd3c4;
+    --nav-background-color: #4e5166;
+    --hover-background-color: #c8adc0;
+    --font-color: black;
+    /* font-style: normal;
+    font-variation-settings:
+      "wdth" 100; */
+  }
+  /* https://coolors.co/edd3c4-c8adc0-4e5166-87a878-70a288 */
+
+  body {
+    font-family: var(--font-family);
+    font-weight: var(--larger-font-weight);
+
+  }
+
+  header{
+    background-color: var(--header-background-color);
+   
+  }
+
+
+
+  /*************************** navigation menue ***************************/
+  #menu {
+	font-size: 1.5rem;
+	border: 0;
+	background: none;
+	color: var(--font-color);
+    cursor: pointer;
+ 	position: absolute;
+	top: 1rem;
+	right: 1rem;
+}
+
+#menu::before {
+	content: "☰";
+}
+
+#menu.open::before {
+	content: "Ⅹ";
+}
+
+.navigation {
+    display: none; /* Ensure the navigation items are arranged horizontally */
+    flex-direction: column;
+    list-style: none;
+    padding: 0; /* Remove any default padding */
+    align-items: center;
+    font-size: medium;
+    background-color: var(--nav-background-color);
+    
+
+}
+
+.navigation.open{
+    display: flex;
+    margin-right: 5px;
+}
+
+.navigation a{
+    display: none;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--font-color);
+    align-items: center;
+}
+
+li a:hover{
+    color: var(--navigation-hover);
+}
+
+.open a {
+    display: block;
+}
+
+footer{
+    background-color: var(--header-background-color);;
+}

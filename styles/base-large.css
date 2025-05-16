@@ -1,0 +1,29 @@
+@media screen and (min-width: 500px) {
+    
+      #menu {
+        display: none; 
+      }
+
+      header{
+    
+        height: auto;
+      }
+  
+      .navigation {
+        display: flex;
+        flex-direction: row !important;
+        background-color: var(--header-background-color);
+       
+        margin-left: auto;
+        margin-right: 5px;
+        
+
+    }
+  
+      .navigation a {
+        display: block;
+        flex: 1 1 auto%;
+      } 
+  
+  
+}
