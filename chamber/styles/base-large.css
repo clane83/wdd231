@@ -1,17 +1,23 @@
 @media screen and (min-width: 700px) {
+  
+  /************************* Header ******************************/
+
   .header-container {
       display: grid; /* Use grid layout for larger screens */
       grid-template-columns: auto 1fr;
       grid-template-rows: 1fr 50px;
       align-items: center;
+      position: relative;
   }
 
   header img {
       grid-column: 1 / 2;
       max-height: 150px;
+      padding: 10px;
+        max-width: 100%; 
   }
 
-  h1 {
+ .header-text {
       grid-column: 2 / 3;
       margin: 0 10px;
       text-align: left; /* Align text to the left for larger screens */
@@ -31,7 +37,7 @@
       right:0;
       top: 0;
       margin-top: 0;
-      padding-bottom: 10px;
+      /* padding-bottom: 10px; */
       width: auto;
       height: 50px;
 
@@ -48,5 +54,39 @@
     height: 50px;
     align-items: center;
     align-content: center;
+  }
+
+  /************************* Main ******************************/
+
+
+  .hero {
+    
+      grid-column: 1 / 2;
+      max-height: 500px; /* Limit the height */
+      width: auto; /* Allow the width to scale proportionally */
+      padding: 10px;
+  }
+
+  .home {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-rows: 1fr;
+    margin-right: 0;
+    
+  }
+
+  section, .card {
+    border: 1px solid var(--font-color);
+    margin-right: 10px
+  }
+
+
+}
+
+
+
+@media screen and (min-width: 1200px) {
+  .hero {
+      grid-template-columns: repeat(3, 1fr); /* Three equal columns for very large screens */
   }
 }
