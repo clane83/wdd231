@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //business card  array//
+    
     const businesses = [
         {
             businessName: "Vintage Clothing",
@@ -53,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add more movies objects here...
       ];
 
+      
 
 
     function createBusinessCard(filteredBusinesses) {
@@ -63,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         container.innerHTML = ""; // Clear existing content
 
-        
+        const limitedBusinesses = filteredBusinesses.slice(0, 3);
 
         filteredBusinesses.forEach(business => {
             //main card container//
