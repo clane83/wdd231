@@ -1,4 +1,28 @@
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 500px) {
+  .hero {
+      grid-template-columns: repeat(3, 1fr); /* Three equal columns for very large screens */
+  }
+
+  .home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .home > section:first-child {
+    grid-column: span 2;
+  }
+
+  section, .card {
+    border: 1px solid var(--font-color);
+    margin-right: 10px;
+  }
+
+}
+
+@media screen and (min-width: 850px) {
   
   /************************* Header ******************************/
 
@@ -69,19 +93,25 @@
 
   .home {
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
-    grid-template-rows: 1fr;
+    grid-template-columns: .5fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
     margin-right: 0;
-    
+    width: 100%;
+  }
+
+  .home > section:first-child {
+    grid-column: span 2;
   }
 
   section, .card {
     border: 1px solid var(--font-color);
-    margin-right: 10px
+    margin-right: 10px;
   }
 
 
 }
+
+
 
 
 
