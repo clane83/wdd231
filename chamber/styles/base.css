@@ -233,6 +233,7 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     background-color: var(--header-background-color);
+    margin-top: 10px;
 }
 
 .footer-container2 {
