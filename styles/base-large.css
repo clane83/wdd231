@@ -1,4 +1,4 @@
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 700px) {
   .header-container {
       display: grid; /* Use grid layout for larger screens */
       grid-template-columns: auto 1fr;
@@ -40,6 +40,9 @@
   .navigation a {
       display: block; /* Ensure links are visible */
       padding: 0 15px;
+      
+      align-content: center;
+
   }
   .navigation li{
     height: 50px;
