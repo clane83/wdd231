@@ -101,59 +101,106 @@ document.addEventListener("DOMContentLoaded", () => {
       
 
 
-    function createBusinessCard(filteredBusinesses) {
+      function createBusinessView(filteredBusinesses, isListView) {
         const container = document.getElementById("business-container");
         if (!container) {
-            console.error("Element with id business-container not foudn in the DOM.");
+            console.error("Element with id business-container not found in the DOM.");
+            return;
         }
+
+        container.innerHTML = "";
         
-        container.innerHTML = ""; // Clear existing content
-
-        const limitedBusinesses = filteredBusinesses.slice(0, 3);
-
+        
         filteredBusinesses.forEach(business => {
-            //main card container//
-            let card = document.createElement("section");
-            card.classList.add("business-card"); //adds class to the card
+            if (isListView) {
+                // Create list view
+                let listItem = document.createElement("div");
+                listItem.classList.add("business-list-item");
 
-            //section 1 of the card//
-            const section1 = document.createElement('div');
-            section1.classList.add("card-section1");
-            const businessName = document.createElement("h3");
-            const businessTagLine = document.createElement("p");
+                const businessName = document.createElement("h3");
+                const businessTagLine = document.createElement("p");
+                const email = document.createElement("p");
+                const phone = document.createElement("p");
+                const url = document.createElement("a");
 
-            businessName.textContent = business.businessName;
-            businessTagLine.textContent = business.businessTagLine;
-            section1.appendChild(businessName);
-            section1.appendChild(businessTagLine);
-            
-            //section2 of the card//
-            const section2 = document.createElement('div');
-            section2.classList.add("card-section2");
-            const image = document.createElement("img");
-            const email = document.createElement("p");
-            const phone = document.createElement("p");
-            const url = document.createElement("p");
+                businessName.textContent = business.businessName;
+                businessTagLine.textContent = business.businessTagLine;
+                email.textContent = `Email: ${business.email}`;
+                phone.textContent = `Phone: ${business.phone}`;
+                url.textContent = "Visit Website";
+                url.href = business.url;
+                url.target = "_blank";
 
-            image.setAttribute("src", business.imageURL);
-            email.textContent = business.email;
-            phone.textContent = business.phone;
-            url.textContent = business.url;
-            section2.appendChild(image);
-            section2.appendChild(email);
-            section2.appendChild(phone);
-            section2.appendChild(url);
+                listItem.appendChild(businessName);
+                listItem.appendChild(businessTagLine);
+                listItem.appendChild(email);
+                listItem.appendChild(phone);
+                listItem.appendChild(url);
 
-            card.appendChild(section1);
-            card.appendChild(section2);
-            
-            container.appendChild(card);
+                container.appendChild(listItem);
+            } else {
+                // Create card view
+                let card = document.createElement("section");
+                card.classList.add("business-card");
 
+                const section1 = document.createElement("div");
+                section1.classList.add("card-section1");
+                const businessName = document.createElement("h3");
+                const businessTagLine = document.createElement("p");
+
+                businessName.textContent = business.businessName;
+                businessTagLine.textContent = business.businessTagLine;
+                section1.appendChild(businessName);
+                section1.appendChild(businessTagLine);
+
+                const section2 = document.createElement("div");
+                section2.classList.add("card-section2");
+                const image = document.createElement("img");
+                const email = document.createElement("p");
+                const phone = document.createElement("p");
+                const url = document.createElement("a");
+
+                image.setAttribute("src", business.imageURL);
+                image.setAttribute("alt", `${business.businessName} logo`);
+                email.textContent = `Email: ${business.email}`;
+                phone.textContent = `Phone: ${business.phone}`;
+                url.textContent = "Visit Website";
+                url.href = business.url;
+                url.target = "_blank";
+
+                section2.appendChild(image);
+                section2.appendChild(email);
+                section2.appendChild(phone);
+                section2.appendChild(url);
+
+                card.appendChild(section1);
+                card.appendChild(section2);
+
+                container.appendChild(card);
+            }
         });
     }
 
+    const listViewButton = document.querySelector("#listView");
+    const cardViewButton = document.querySelector("#cardView");
+    const businessContainer = document.querySelector("#business-container");
 
-    createBusinessCard(businesses);
+    // Switch to list view
+    listViewButton.addEventListener("click", () => {
+        businessContainer.classList.remove("card-view");
+        businessContainer.classList.add("list-view");
+        createBusinessView(businesses, true); 
+    });
+
+    // Switch to card view
+    cardViewButton.addEventListener("click", () => {
+        businessContainer.classList.remove("list-view");
+        businessContainer.classList.add("card-view");
+        createBusinessView(businesses, false); 
+    });
+
+    // Default view
+    createBusinessView(businesses, false); 
     
 
-    })
+    });
