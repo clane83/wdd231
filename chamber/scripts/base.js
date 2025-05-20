@@ -5,113 +5,56 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Hamburger menu
     const hamButton = document.querySelector("#menu");
-        const navigation = document.querySelector(".navigation");
+    const navigation = document.querySelector(".navigation");
     
-        hamButton.addEventListener("click", () => {
-            navigation.classList.toggle("open");
-            hamButton.classList.toggle("open");
-        });
+    hamButton.addEventListener("click", () => {
+        navigation.classList.toggle("open");
+        hamButton.classList.toggle("open");
+    });
 
+    // Global variable to store fetched members
+    let cachedMembers = null;
 
-
-    //business card  array//
-    
-    const businesses = [
-        {
-            businessName: "Vintage Clothing",
-            businessTagLine: "Shop vintage for less",
-            email: "info@vintage.com",
-            phone: "702-255-8918",
-            contactName: "Maria",
-            membershipLevel: "silver",
-            url: "https://vintageclothing.com",
-            imageURL:
-            "images/vintageclothing.png"
-        },
-        {
-            businessName: "Intelligent Solutions",
-            businessTagLine: "Solutions for a smarter world",
-            email: "info@inteligentsolutions.com",
-            phone: "888-876-3092",
-            contactName: "Diego",
-            membershipLevel: "gold",
-            url: "https://intelligentsolutions.com",
-            imageURL:
-            "images/intelligentsolutions.png"
-        },
-        {
-            businessName: "Sole Revival",
-            businessTagLine: "Restoring Soles, One Step at a Time.",
-            email: "info@solerevival.com",
-            phone: "702-876-9267",
-            contactName: "Todd",
-            membershipLevel: "Silver",
-            url: "https://solerevival.com",
-            imageURL:
-            "images/sole_revival.png"
-        },
-        {
-            businessName: "Fork & Flame",
-            businessTagLine: "Crafted with Fire. Served with Style.",
-            email: "info@forkflame.com",
-            phone: "725-265-3095",
-            contactName: "Fanny",
-            membershipLevel: "Silver",
-            url: "https://forkandflame.com",
-            imageURL:
-            "images/fork-flame.png"
-        },
-        {
-            businessName: "Larry's Laptops",
-            businessTagLine: "Your Tech, Our Passion",
-            email: "info@larrylaptops.com",
-            phone: "725-764-4624",
-            contactName: "Larry",
-            membershipLevel: "member",
-            url: "https://larrylaptops.com",
-            imageURL:
-            "images/larry-laptops.png"
-        },
-        {
-            businessName: "EchoNest",
-            businessTagLine: "Intelligence That Echoes Forward.",
-            email: "info@echonest.com",
-            phone: "888-567-7562",
-            contactName: "Mitch",
-            membershipLevel: "gold",
-            url: "https://echonest.com",
-            imageURL:
-            "images/echo-nest.png"
-        },
-        {
-            businessName: "BrightForge",
-            businessTagLine: "Custom Software Solutions",
-            email: "info@brightforge.com",
-            phone: "725-909-5647",
-            contactName: "Mark",
-            membershipLevel: "gold",
-            url: "https://brightforge.com",
-            imageURL:
-            "images/brightforge.png"
+    async function getMembersData() {
+        const businessContainer = document.querySelector("#business-container");
+        if (businessContainer) {
+            businessContainer.innerHTML = "<p>Loading...</p>";
         }
-        
-        // Add more movies objects here...
-      ];
+        try {
+            console.log("Fetching data from members.json...");
+            const response = await fetch("scripts/members.json");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("Data fetched successfully:", data);
+            // Access the 'members' array from the JSON
+            cachedMembers = data.members;
+            // Standardize membershipLevel to lowercase
+            cachedMembers.forEach(member => {
+                member.membershipLevel = member.membershipLevel.toLowerCase();
+            });
+            createBusinessView(cachedMembers, false); // Display card view by default
+        } catch (error) {
+            console.error("Error fetching the JSON data:", error);
+            if (businessContainer) {
+                businessContainer.innerHTML = "<p>Error loading businesses. Please try again later.</p>";
+            }
+        }
+    }
 
-      
-
-
-      function createBusinessView(filteredBusinesses, isListView) {
+    function createBusinessView(filteredMembers, isListView) {
+        console.log("Creating business view:", filteredMembers);
         const container = document.getElementById("business-container");
         if (!container) {
             console.error("Element with id business-container not found in the DOM.");
             return;
         }
 
-        container.innerHTML = "";
-        
-        
-        filteredBusinesses.forEach(business => {
+        container.innerHTML = ""; // Clear existing content
+
+        filteredMembers.forEach((member) => {
+            console.log("Processing member:", member);
             if (isListView) {
                 // Create list view
                 let listItem = document.createElement("div");
@@ -123,12 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const phone = document.createElement("p");
                 const url = document.createElement("a");
 
-                businessName.textContent = business.businessName;
-                businessTagLine.textContent = business.businessTagLine;
-                email.textContent = `Email: ${business.email}`;
-                phone.textContent = `Phone: ${business.phone}`;
+                businessName.textContent = member.businessName;
+                businessTagLine.textContent = member.businessTagLine;
+                email.textContent = `Email: ${member.email}`;
+                phone.textContent = `Phone: ${member.phone}`;
                 url.textContent = "Visit Website";
-                url.href = business.url;
+                url.href = member.url;
                 url.target = "_blank";
 
                 listItem.appendChild(businessName);
@@ -148,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const businessName = document.createElement("h3");
                 const businessTagLine = document.createElement("p");
 
-                businessName.textContent = business.businessName;
-                businessTagLine.textContent = business.businessTagLine;
+                businessName.textContent = member.businessName;
+                businessTagLine.textContent = member.businessTagLine;
                 section1.appendChild(businessName);
                 section1.appendChild(businessTagLine);
 
@@ -160,12 +103,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 const phone = document.createElement("p");
                 const url = document.createElement("a");
 
-                image.setAttribute("src", business.imageURL);
-                image.setAttribute("alt", `${business.businessName} logo`);
-                email.textContent = `Email: ${business.email}`;
-                phone.textContent = `Phone: ${business.phone}`;
+                image.setAttribute("src", member.imageURL || "images/fallback-image.png");
+                image.setAttribute("alt", `${member.businessName} logo`);
+                image.onerror = () => {
+                    image.src = "images/fallback-image.png"; // Fallback image
+                };
+                email.textContent = `Email: ${member.email}`;
+                phone.textContent = `Phone: ${member.phone}`;
                 url.textContent = "Visit Website";
-                url.href = business.url;
+                url.href = member.url;
                 url.target = "_blank";
 
                 section2.appendChild(image);
@@ -186,21 +132,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const businessContainer = document.querySelector("#business-container");
 
     // Switch to list view
-    listViewButton.addEventListener("click", () => {
-        businessContainer.classList.remove("card-view");
-        businessContainer.classList.add("list-view");
-        createBusinessView(businesses, true); 
-    });
+    if (listViewButton) {
+        listViewButton.addEventListener("click", () => {
+            if (businessContainer) {
+                businessContainer.classList.remove("card-view");
+                businessContainer.classList.add("list-view");
+            }
+            if (cachedMembers) {
+                createBusinessView(cachedMembers, true);
+            } else {
+                getMembersData(); // Refetch if no data
+            }
+        });
+    }
 
     // Switch to card view
-    cardViewButton.addEventListener("click", () => {
-        businessContainer.classList.remove("list-view");
-        businessContainer.classList.add("card-view");
-        createBusinessView(businesses, false); 
-    });
+    if (cardViewButton) {
+        cardViewButton.addEventListener("click", () => {
+            if (businessContainer) {
+                businessContainer.classList.remove("list-view");
+                businessContainer.classList.add("card-view");
+            }
+            if (cachedMembers) {
+                createBusinessView(cachedMembers, false);
+            } else {
+                getMembersData(); // Refetch if no data
+            }
+        });
+    }
 
-    // Default view
-    createBusinessView(businesses, false); 
-    
-
-    });
+    // Fetch and display members on load
+    getMembersData();
+});

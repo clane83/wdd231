@@ -1,4 +1,4 @@
-[
+{ "members": [
     {
         "businessName": "Vintage Clothing",
         "businessTagLine": "Shop vintage for less",
@@ -7,7 +7,8 @@
         "contactName": "Maria",
         "membershipLevel": "silver",
         "url": "https://vintageclothing.com",
-        "imageURL": "images/vintageclothing.png"
+        "imageURL":
+        "images/vintageclothing.png"
     },
     {
         "businessName": "Intelligent Solutions",
@@ -17,7 +18,8 @@
         "contactName": "Diego",
         "membershipLevel": "gold",
         "url": "https://intelligentsolutions.com",
-        "imageURL": "images/intelligentsolutions.png"
+        "imageURL":
+        "images/intelligentsolutions.png"
     },
     {
         "businessName": "Sole Revival",
@@ -25,9 +27,10 @@
         "email": "info@solerevival.com",
         "phone": "702-876-9267",
         "contactName": "Todd",
-        "membershipLevel": "silver",
+        "membershipLevel": "Silver",
         "url": "https://solerevival.com",
-        "imageURL": "images/sole_revival.png"
+        "imageURL":
+        "images/sole_revival.png"
     },
     {
         "businessName": "Fork & Flame",
@@ -35,9 +38,10 @@
         "email": "info@forkflame.com",
         "phone": "725-265-3095",
         "contactName": "Fanny",
-        "membershipLevel": "silver",
+        "membershipLevel": "Silver",
         "url": "https://forkandflame.com",
-        "imageURL": "images/fork-flame.png"
+        "imageURL":
+        "images/fork-flame.png"
     },
     {
         "businessName": "Larry's Laptops",
@@ -47,7 +51,8 @@
         "contactName": "Larry",
         "membershipLevel": "member",
         "url": "https://larrylaptops.com",
-        "imageURL": "images/larry-laptops.png"
+        "imageURL":
+        "images/larry-laptops.png"
     },
     {
         "businessName": "EchoNest",
@@ -57,16 +62,19 @@
         "contactName": "Mitch",
         "membershipLevel": "gold",
         "url": "https://echonest.com",
-        "imageURL": "images/echo-nest.png"
+        "imageURL":
+        "images/echo-nest.png"
     },
     {
         "businessName": "BrightForge",
         "businessTagLine": "Custom Software Solutions",
-        "email": "info@larrylaptops.com",
+        "email": "info@brightforge.com",
         "phone": "725-909-5647",
         "contactName": "Mark",
         "membershipLevel": "gold",
         "url": "https://brightforge.com",
-        "imageURL": "images/brightforge.png"
+        "imageURL":
+        "images/brightforge.png"
     }
-]
+    
+]}
