@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             businessName: "BrightForge",
             businessTagLine: "Custom Software Solutions",
-            email: "info@larrylaptops.com",
+            email: "info@brightforge.com",
             phone: "725-909-5647",
             contactName: "Mark",
             membershipLevel: "gold",
