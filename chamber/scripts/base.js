@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const longitude = 'lon=115.1391';
 
     const urlcurrentTemp = `https://api.openweathermap.org/data/2.5/weather?${latitude}&${longitude}&${apiKey}&${units}`;
+    const urlForecast = `https://api.openweathermap.org/data/2.5/forecast?${latitude}&${longitude}&${units}&${apiKey}`;
 
     async function apiFetch() {
         try {
@@ -260,4 +261,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     apiFetch();
+
+
+    async function fetchForecast() {
+        try {
+            const response = await fetch(urlForecast);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                displayForecast(data); // Pass entire response
+            } else {
+                throw Error(await response.text());
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+
+
+    function displayForecast(data) {
+        const forecastContainer = document.getElementById("forecast-container");
+        if (!forecastContainer) {
+            console.error("Element with id forecast-container not found in the DOM.");
+            return;
+        }
+    
+        forecastContainer.innerHTML = ""; // Clear once before loop
+    
+        const dailyForecast = data.list.filter(item => item.dt_txt.includes("12:00:00")).slice(0, 3); // limit to 3 days
+
+        dailyForecast.forEach((day) => {
+            // Create elements
+            const forecastCard = document.createElement("div");
+            forecastCard.classList.add("forecast-card");
+    
+            const formattedDate = document.createElement("h3");
+            const tempInfo = document.createElement("p");
+    
+            // Format the date
+            const date = new Date(day.dt * 1000);
+            const options = { weekday: "long", month: "short", day: "numeric" };
+            formattedDate.textContent = date.toLocaleDateString("en-US", options);
+    
+            // Temperature info
+            const highTemp = Math.round(day.main.temp_max || day.main.temp);
+            const lowTemp = Math.round(day.main.temp_min || day.main.temp);
+            tempInfo.innerHTML = `High: ${highTemp}&deg;F<br>Low: ${lowTemp}&deg;F`;
+    
+            // Optional: add icon and description
+            const icon = day.weather[0].icon;
+            const desc = day.weather[0].description;
+            const iconImg = document.createElement("img");
+            iconImg.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+            iconImg.alt = desc;
+    
+            // Add elements to the forecast card
+            forecastCard.appendChild(formattedDate);
+            // forecastCard.appendChild(iconImg);
+            forecastCard.appendChild(tempInfo);
+    
+            // Add the card to the container
+            forecastContainer.appendChild(forecastCard);
+        });
+    }
+    
+
+
+
+    fetchForecast();
+
 });
