@@ -163,4 +163,101 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fetch and display members on load
     getMembersData();
+
+
+    // ids for required inputs on index.html
+    const currentTemp = document.querySelector('#current-temp');
+    const weatherIcon = document.querySelector('#weather-icon');
+    const weatherDesc = document.querySelector('#weather-description');
+    const high = document.querySelector('#high-temp');
+    const low = document.querySelector('#low-temp');
+    const humidity = document.querySelector('#humidity');
+    const sunriseLocal = document.querySelector('#sunrise');
+    const sunsetLocal = document.querySelector('#sunset');
+    const captionDesc = document.querySelector('figcaption');
+
+    // weather api
+    const apiKey = 'appid=39872884ff00973498b0883ade9233e1';
+    const units = 'units=imperial';
+    const latitude = 'lat=36.1716';
+    const longitude = 'lon=115.1391';
+
+    const urlcurrentTemp = `https://api.openweathermap.org/data/2.5/weather?${latitude}&${longitude}&${apiKey}&${units}`;
+
+    async function apiFetch() {
+        try {
+            const response = await fetch(urlcurrentTemp);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data); // Debugging
+                displayResults(data); // Display the results
+            } else {
+                throw Error(await response.text());
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function displayResults(data) {
+        console.log(data); // Debugging the API response
+        currentTemp.innerHTML = `${data.main.temp}&deg;F`;
+        weatherDesc.innerHTML = data.weather[0].main;
+        high.innerHTML = `${data.main.temp_max}&deg;F`;
+        low.innerHTML = `${data.main.temp_min}&deg;F`;
+        humidity.innerHTML = `${data.main.humidity}%`;
+       
+        // Get the Unix timestamps (in seconds)
+        const sunriseUtc = data.sys.sunrise;
+        const sunsetUtc = data.sys.sunset;
+
+        // console.log("Sunrise (UTC):", sunriseUtc);
+        // console.log("Sunset (UTC):", sunsetUtc);
+
+        // Convert to milliseconds and create Date objects
+        const sunriseDate = new Date(sunriseUtc * 1000);
+        const sunsetDate = new Date(sunsetUtc * 1000);
+
+        // console.log("Sunrise Date Object:", sunriseDate);
+        // console.log("Sunset Date Object:", sunsetDate);
+
+        // Manually adjust for PST/PDT if needed
+        const sunrisePdt = new Date(sunriseDate.getTime() - (7 * 60 * 60 * 1000)); // Subtract 7 hours for PDT
+        const sunsetPdt = new Date(sunsetDate.getTime() - (7 * 60 * 60 * 1000)); // Subtract 7 hours for PDT
+
+        // console.log("Adjusted Sunrise Date (PDT):", sunrisePdt);
+        // console.log("Adjusted Sunset Date (PDT):", sunsetPdt);
+
+        // Format to PST/PDT using Intl.DateTimeFormat
+        const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/Los_Angeles',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        }); 
+
+        const sunriseTimeStr = formatter.format(sunrisePdt);
+        const sunsetTimeStr = formatter.format(sunsetPdt);
+
+        // console.log("Formatted Sunrise Time (PDT):", sunriseTimeStr);
+        // console.log("Formatted Sunset Time (PDT):", sunsetTimeStr);
+
+        
+        sunriseLocal.innerHTML = sunriseTimeStr;
+        sunsetLocal.innerHTML = sunsetTimeStr;
+
+        // console.log("Sunrise Local Time Element:", sunriseLocal.innerHTML);
+        // console.log("Sunset Local Time Element:", sunsetLocal.innerHTML);
+
+        // Construct the icon URL
+        const iconsrc = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+        console.log(iconsrc); // Debugging the icon URL
+
+        let desc = data.weather[0].description; // Use 'description' for a more detailed text
+        weatherIcon.setAttribute('src', iconsrc);
+        weatherIcon.setAttribute('alt', desc);
+        captionDesc.textContent = desc;
+    }
+
+    apiFetch();
 });
