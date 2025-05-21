@@ -28,13 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const data = await response.json();
             console.log("Data fetched successfully:", data);
+    
             // Access the 'members' array from the JSON
             cachedMembers = data.members;
+    
             // Standardize membershipLevel to lowercase
             cachedMembers.forEach(member => {
                 member.membershipLevel = member.membershipLevel.toLowerCase();
             });
+    
             createBusinessView(cachedMembers, false); // Display card view by default
+            createSpotlightView(); // Call spotlight view here
         } catch (error) {
             console.error("Error fetching the JSON data:", error);
             if (businessContainer) {
@@ -42,6 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
+    
 
     function createBusinessView(filteredMembers, isListView) {
         console.log("Creating business view:", filteredMembers);
@@ -301,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
             // Format the date
             const date = new Date(day.dt * 1000);
-            const options = { weekday: "long", month: "short", day: "numeric" };
+            const options = { weekday: "long"};
             formattedDate.textContent = date.toLocaleDateString("en-US", options);
     
             // Temperature info
@@ -309,16 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const lowTemp = Math.round(day.main.temp_min || day.main.temp);
             tempInfo.innerHTML = `High: ${highTemp}&deg;F<br>Low: ${lowTemp}&deg;F`;
     
-            // Optional: add icon and description
-            const icon = day.weather[0].icon;
-            const desc = day.weather[0].description;
-            const iconImg = document.createElement("img");
-            iconImg.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-            iconImg.alt = desc;
-    
             // Add elements to the forecast card
             forecastCard.appendChild(formattedDate);
-            // forecastCard.appendChild(iconImg);
             forecastCard.appendChild(tempInfo);
     
             // Add the card to the container
@@ -326,9 +324,84 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-
-
-
     fetchForecast();
+
+
+
+    const spotlightContainer = document.getElementById('spotlights');
+
+    function createSpotlightView() {
+        if (!spotlightContainer) {
+            console.error("Element with id 'spotlights' not found in the DOM.");
+            return;
+        }
+    
+        console.log("Cached Members:", cachedMembers); // Debugging
+    
+        if (!cachedMembers || cachedMembers.length === 0) {
+            console.error("No cached members available for spotlights.");
+            return;
+        }
+    
+        spotlightContainer.innerHTML = ""; // Clear existing content
+    
+        // Filter only Gold or Silver members
+        const eligibleMembers = cachedMembers.filter(member =>
+            member.membershipLevel === 'gold' || member.membershipLevel === 'silver'
+        );
+    
+        // Randomly select 2 or 3 members
+        const numToShow = Math.floor(Math.random() * 2) + 2; // 2 or 3
+        const shuffled = eligibleMembers.sort(() => 0.5 - Math.random());
+        const selectedMembers = shuffled.slice(0, numToShow);
+    
+        // Create cards for each selected member
+        selectedMembers.forEach(member => {
+            let card = document.createElement("section");
+                card.classList.add("spotlight-card");
+
+                const section1 = document.createElement("div");
+                section1.classList.add("card-section1");
+                const businessName = document.createElement("h3");
+                const businessTagLine = document.createElement("p");
+
+    
+                businessName.textContent = member.businessName;
+                businessTagLine.textContent = member.businessTagLine;
+                section1.appendChild(businessName);
+                section1.appendChild(businessTagLine);
+
+                const section2 = document.createElement("div");
+                section2.classList.add("card-section2");
+                const image = document.createElement("img");
+                const email = document.createElement("p");
+                const phone = document.createElement("p");
+                const url = document.createElement("a");
+
+                image.setAttribute("src", member.imageURL || "images/fallback-image.png");
+                image.setAttribute("alt", `${member.businessName} logo`);
+                image.onerror = () => {
+                    image.src = "images/fallback-image.png"; // Fallback image
+                };
+                email.textContent = `Email: ${member.email}`;
+                phone.textContent = `Phone: ${member.phone}`;
+                url.textContent = "Visit Website";
+                url.href = member.url;
+                url.target = "_blank";
+
+                section2.appendChild(image);
+                section2.appendChild(email);
+                section2.appendChild(phone);
+                section2.appendChild(url);
+
+                card.appendChild(section1);
+                card.appendChild(section2);
+
+                spotlightContainer.appendChild(card);
+        });
+    }
+    
+    createSpotlightView();
+
 
 });

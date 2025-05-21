@@ -168,14 +168,14 @@ section h2, .card h2{
 }
 
 /************************* business card ******************************/
-#business-container {
+#business-container, #spotlights {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     ;
   }
 
-  div .business-card {
+  div .business-card, div .spotlight-container  {
     border: 1px solid black;
     border-radius: 10px;
     overflow: hidden;
@@ -264,8 +264,25 @@ section h2, .card h2{
 }
     
 
+/************************* weather card ******************************/
 
-/************************* business card ******************************/
+.forecast-card {
+    font-family: var(--font-family) !important;
+}
+
+
+.forecast-card h3{
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+.forecast-card p, .weather-container p{
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+
+
+/************************* footer ******************************/
 
 footer {
     display: grid;
