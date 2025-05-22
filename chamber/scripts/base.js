@@ -351,7 +351,8 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     
         // Randomly select 2 or 3 members
-        const numToShow = Math.floor(Math.random() * 2) + 2; // 2 or 3
+        let numToShow = Math.floor(Math.random() * 2) + 2; // 2 or 3
+        numToShow = Math.min(numToShow, 3, eligibleMembers.length);
         const shuffled = eligibleMembers.sort(() => 0.5 - Math.random());
         const selectedMembers = shuffled.slice(0, numToShow);
     
