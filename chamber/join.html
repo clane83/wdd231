@@ -19,10 +19,46 @@
 </head>
 <body>
     <header>
-    
+        <div class="header-container">
+            <img src="images/lasvegas.jpg" alt="las vegas">
+            <div class="header-text">
+            <h1>Las Vegas</h1>
+            <h2>Chamber of Commerce</h2>
+        </div>
+            <button id="menu"></button>
+            <nav>
+                <ul class="navigation">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="">Discover</a></li>
+                    <li><a href="directory.html">Directory</a></li>
+                    <li><a href="">Join</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
     <main>
-
+        <fieldset>
+            <label>Organization Name<input type="text" id="organization" name="oname"></label>
+            <label>First Name<input type="text" id="name" name="fname"></label>
+            <label>Last Name<input type="text" id="name" name="lname"></label>
+            <label>Title in organization<input type="text" id="title" name="title"></label>
+            <label>Email<input type="email" id="email" name="email"></label>
+            <label>Phone Number<input type="tel" id="phone" name="phone"></label>
+            <div class="member-container">
+                <div class="member-label">Membership Level</div>
+                <div class="member-options">
+                    <label><input type="radio" id="bronze" name="level" value="bronze" required>Bronze</label>
+                    <label><input type="radio" id="silver" name="level" value="silver">Silver</label>
+                    <label><input type="radio" id="gold" name="level" value="gold">Gold</label>
+                    
+                </div>
+            </div>
+            <label>Organization Description</label>
+                    <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
+            <input type="hidden" id="hiddenTimestamp" name="timestamp">
+            <input type="submit" value="Send Form">
+            
+        </fieldset>
     </main>
     <footer>
         <div class="footer-container">
