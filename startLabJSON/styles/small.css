@@ -1,0 +1,28 @@
+#mydialog div {
+    display: grid;
+    grid-template-columns: auto 44px;
+    background-color: #ddd;
+    padding: 5px;
+    border-bottom: #aaa 1px solid;
+}
+
+#mydialog h2 {
+    margin: 0;
+    color: #275690;
+}
+
+#mydialog button {
+    margin: 0;
+    border: 1px solid rbga(0, 0, 0, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 0 10px #aaa;
+}
+
+#mydialog p {
+    padding: 10px;
+    color: #375170;
+}
+
+::backdrop {
+    background-color: rbga (255, 255, 255, 0.8);
+}
