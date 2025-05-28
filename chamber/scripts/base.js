@@ -404,5 +404,41 @@ document.addEventListener("DOMContentLoaded", () => {
     
     createSpotlightView();
 
+    
+
+//Form submission handling
+    document.getElementById('submitButton').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent form submission for demonstration
+        const formData = {
+            organization: document.getElementById('organization').value,
+            fname: document.getElementById('fname').value,
+            lname: document.getElementById('lname').value,
+            title: document.getElementById('title').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            level: document.querySelector('input[name="level"]:checked').value,
+            description: document.getElementById('description').value,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('formData', JSON.stringify(formData));
+        window.location.href = 'thankyou.html'; // Redirect to the thank you page
+    });
+
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    if (formData) {
+        const displayDiv = document.getElementById('formDataDisplay');
+        displayDiv.innerHTML = `
+            <p><strong>Organization Name:</strong> ${formData.organization}</p>
+            <p><strong>First Name:</strong> ${formData.fname}</p>
+            <p><strong>Last Name:</strong> ${formData.lname}</p>
+            <p><strong>Title:</strong> ${formData.title}</p>
+            <p><strong>Email:</strong> ${formData.email}</p>
+            <p><strong>Phone:</strong> ${formData.phone}</p>
+            <p><strong>Membership Level:</strong> ${formData.level}</p>
+            <p><strong>Description:</strong> ${formData.description}</p>
+            <p><strong>Timestamp:</strong> ${formData.timestamp}</p>
+        `;
+    }
+
 
 });
