@@ -298,6 +298,47 @@ section h2, .card h2{
 }
 
 
+/************************* form ******************************/
+form, .membership-cards {
+    display: grid;
+    margin: 0;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input, textarea {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.member-options label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.member-options input[type="radio"] {
+    width: 20px;
+}
+
+div .membership-card {
+    border: 1px solid;
+    margin: 5px;
+    /* align-items: center;
+    align-self: center; */
+    text-align: center;
+    
+}
+
+div .membership-card button {
+    margin-bottom: 10px;
+}
+
+
+
 /************************* footer ******************************/
 
 footer {
