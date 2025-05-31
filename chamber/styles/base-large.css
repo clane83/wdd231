@@ -28,7 +28,31 @@
     ;
   }
 
-}
+ /************************* form ******************************/
+
+  #join {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+    /* align-self: center; */
+  }
+
+  .form {
+    grid-column: 1/2;
+    max-width: 900px;
+    margin-right: 20px;
+    margin-left: auto;
+    width: 100%;
+  }
+
+  #membershipModal {
+    grid-column: 2/3;
+    max-width: 900px;
+    margin-left: 20px;
+    margin-right: auto;
+    width: 100%;
+  }
 
 @media screen and (min-width: 850px) {
   
