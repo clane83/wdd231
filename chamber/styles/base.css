@@ -75,7 +75,7 @@ h1{
     align-items: center;
     font-size: medium;
     background-color: var(--nav-background-color);
-    position: absolute;
+    /* position: absolute; */
     top: 30px;
     right: 0;
 }
@@ -83,7 +83,7 @@ h1{
 
 .navigation.open {
     display: flex; /* Show navigation when open */
-    margin-right: 5px;
+    /* margin-right: 5px; */
     width: 150px;
 }
 
@@ -93,7 +93,7 @@ h1{
     text-align: center;
     text-decoration: none;
     color: var(--font-color);
-    width: 110px;
+    width: 125px;
     height: 50px;
     align-content: center;
 }
@@ -106,7 +106,15 @@ h1{
     color: var(--nav-background-color);
     background-color: var(--hover-background-color);
     border-radius: 5px;
+    
 
+}
+
+.navigation a.active {
+    color: var(--nav-background-color);
+    background: var(--hover-background-color);
+    border-radius: 4px;
+    padding: 0.25em 0.75em;
 }
 
 /************************* Main ******************************/
@@ -307,22 +315,35 @@ form, .membership-cards {
 form label {
     display: block;
     margin-bottom: 5px;
+    /* margin-left: 20px; */
+    margin-right:auto;
 }
 
 form input, textarea {
+    display: block;
     width: 90%;
     padding: 8px;
     margin-bottom: 10px;
 }
 
-.member-options label {
-    display: block;
-    margin-bottom: 0.5rem;
+.member-label {
+    margin-bottom: 10px;
 }
 
-.member-options input[type="radio"] {
-    width: 20px;
+.member-options label{
+    display: grid;
+    grid-template-columns: 44px 1fr;
+
 }
+
+.member-options input {
+    margin-bottom: 0.5rem;
+    padding-left: 8px;
+    grid-column: 1/2;
+
+}
+
+
 
 div .membership-card {
     border: 1px solid;
@@ -336,8 +357,6 @@ div .membership-card {
 div .membership-card button {
     margin-bottom: 10px;
 }
-
-
 
 /************************* footer ******************************/
 

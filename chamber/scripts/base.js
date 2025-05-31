@@ -404,45 +404,70 @@ document.addEventListener("DOMContentLoaded", () => {
     
     createSpotlightView();
 
+
+
+    //auto format phone number input while use is typing form.html
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function (e) {
+            let cleaned = this.value.replace(/\D/g, '').substring(0, 10);
+            let formatted = cleaned;
+            if (cleaned.length > 6) {
+                formatted = `(${cleaned.substring(0,3)}) ${cleaned.substring(3,6)}-${cleaned.substring(6,10)}`;
+            } else if (cleaned.length > 3) {
+                formatted = `(${cleaned.substring(0,3)}) ${cleaned.substring(3,6)}`;
+            } else if (cleaned.length > 0) {
+                formatted = `(${cleaned}`;
+            }
+            this.value = formatted;
+        });
+    }
+
     
 
-//Form submission handling
-    document.getElementById('submitButton').addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent form submission for demonstration
-        const formData = {
-            organization: document.getElementById('organization').value,
-            fname: document.getElementById('fname').value,
-            lname: document.getElementById('lname').value,
-            title: document.getElementById('title').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            level: document.querySelector('input[name="level"]:checked').value,
-            description: document.getElementById('description').value,
-            timestamp: new Date().toISOString()
-        };
-        localStorage.setItem('formData', JSON.stringify(formData));
-        window.location.href = 'thankyou.html'; // Redirect to the thank you page
-    });
+    
+    //save form data to local storage from join.html
+    const joinForm = document.querySelector('.form');
+    if (joinForm) {
+        joinForm.addEventListener('submit', function(event) {
+            const formData = {
+                organization: document.getElementById('organization').value,
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                title: document.getElementById('title').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                level: document.querySelector('input[name="level"]:checked')?.value,
+                description: document.getElementById('description').value,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('formData', JSON.stringify(formData));
+            
+        });
+    }
 
-    const formData = JSON.parse(localStorage.getItem('formData'));
-    if (formData) {
-        const displayDiv = document.getElementById('formDataDisplay');
-        displayDiv.innerHTML = `
-            <p><strong>Organization Name:</strong> ${formData.organization}</p>
-            <p><strong>First Name:</strong> ${formData.fname}</p>
-            <p><strong>Last Name:</strong> ${formData.lname}</p>
-            <p><strong>Title:</strong> ${formData.title}</p>
-            <p><strong>Email:</strong> ${formData.email}</p>
-            <p><strong>Phone:</strong> ${formData.phone}</p>
-            <p><strong>Membership Level:</strong> ${formData.level}</p>
-            <p><strong>Description:</strong> ${formData.description}</p>
-            <p><strong>Timestamp:</strong> ${formData.timestamp}</p>
-        `;
+    // Display form data on thankyou.html
+    const displayDiv = document.getElementById('formDataDisplay');
+    if (displayDiv) {
+        const formData = JSON.parse(localStorage.getItem('formData'));
+        if (formData) {
+            displayDiv.innerHTML = `
+                <p><strong>Organization Name:</strong> ${formData.organization}</p>
+                <p><strong>First Name:</strong> ${formData.fname}</p>
+                <p><strong>Last Name:</strong> ${formData.lname}</p>
+                <p><strong>Title:</strong> ${formData.title}</p>
+                <p><strong>Email:</strong> ${formData.email}</p>
+                <p><strong>Phone:</strong> ${formData.phone}</p>
+                <p><strong>Membership Level:</strong> ${formData.level}</p>
+                <p><strong>Description:</strong> ${formData.description}</p>
+                <p><strong>Timestamp:</strong> ${new Date(formData.timestamp).toLocaleString()}</p>
+            `;
+        }
     }
 
 
-    
-    
+////////////////////////// form ///////////////////////////////
+
     const membership = [
         {
           level: "NP Membership",
@@ -506,5 +531,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     
       closeModalButton.addEventListener("click", () => modal.close());
+
 
 });
