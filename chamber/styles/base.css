@@ -351,6 +351,7 @@ div .membership-card {
     /* align-items: center;
     align-self: center; */
     text-align: center;
+    background: var(--hover-background-color);
     
 }
 
@@ -406,5 +407,13 @@ footer nav{
     padding: 0;
     margin:0;
 
+}
+
+.sociallinks {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom: 5px;
+    /* margin-left: 20px; */
+    margin-right:auto;
 }
 
