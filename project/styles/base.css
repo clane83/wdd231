@@ -1,0 +1,100 @@
+.header-container {
+    /* background-color: var(--header-background-color); */
+    display: flex;
+    flex-direction: row; /* Stack elements vertically for small screens */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
+}
+
+header img {
+    padding: 10px;
+    max-width: 100px; /* Ensure the image is responsive */
+}
+
+.header-text{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+    flex-grow: 1;
+}
+
+h1{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.header-text h2{
+    padding-top: 0;
+    margin-top: 0;
+}
+
+
+#menu {
+    font-size: 1.5rem;
+    border: 0;
+    background: none;
+    /* color: var(--font-color); */
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+#menu::before {
+    content: "☰";
+}
+
+#menu.open::before {
+    content: "Ⅹ";
+}
+
+.navigation {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    align-items: center;
+    font-size: medium;
+    /* background-color: var(--nav-background-color); */
+    /* position: absolute; */
+    top: 30px;
+    right: 0;
+}
+
+
+.navigation.open {
+    display: flex; /* Show navigation when open */
+    /* margin-right: 5px; */
+    width: 150px;
+}
+
+.navigation a {
+    display: none;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    /* color: var(--font-color); */
+    width: 125px;
+    height: 50px;
+    align-content: center;
+}
+
+.open a {
+    display: block;
+}
+
+.navigation a:hover {
+    /* color: var(--nav-background-color);
+    background-color: var(--hover-background-color); */
+    border-radius: 5px;
+    
+
+}
+
+.navigation a.active {
+    /* color: var(--nav-background-color);
+    background: var(--hover-background-color); */
+    border-radius: 4px;
+    padding: 0.25em 0.75em;
+}
