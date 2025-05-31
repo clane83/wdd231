@@ -4,7 +4,12 @@ console.log("base.js loaded successfully");
 
 const API_KEY = 'appid=39872884ff00973498b0883ade9233e1';
 const units = 'units=imperial';
+//create constant urls to be used throughout the script
+const URL = `https://api.openweathermap.org/data/2.5/weather?`;
+const ZIPURL = `https://api.openweathermap.org/data/2.5/weather?`;
 
+let lat = '';
+let lon = '';
 
 function handleSearch() {
     const zip = document.getElementById("zip").value.trim();
@@ -20,8 +25,8 @@ function handleSearch() {
 function searchByZip(zip) {
     document.getElementById("output").innerText = `Searching for ZIP: ${zip}`;
 
-    
-    const zipUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&${API_KEY}`;
+    //ZIPURL pulled from above constant
+    const zipUrl = `${ZIPURL}zip=${zip}&${API_KEY}`;
 
     fetch(zipUrl)
         .then(response => {
@@ -33,10 +38,10 @@ function searchByZip(zip) {
         .then(data => {
             console.log("API (ZIP) response:", data);
             //pull the coords to use in the localUrl to get local current weather
-            const lat = data.coord.lat;
-            const lon = data.coord.lon;
-            
-            const locationUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&${units}&${API_KEY}`;
+            lat = data.coord.lat;
+            lon = data.coord.lon;
+            //URL pulled from above constant
+            const locationUrl = `${URL}lat=${lat}&lon=${lon}&${units}&${API_KEY}`;
             fetch(locationUrl)
                 .then(response => {
                 if (!response.ok) {
@@ -47,7 +52,7 @@ function searchByZip(zip) {
                 .then(data => {
                 console.log("API (Location) response:", data);
                 document.getElementById("weather").innerText = 
-                    `Weather at your location: ${data.weather[0].description}, min of ${data.main.temp_min}°F, max of ${data.main.temp_max}°F`;
+                    `Weather at your location: ${data.weather[0].description}, min of ${data.main.temp_min}°F, max of ${data.main.temp_max}°F, Lattitude: ${lat} Longitude: ${lon}`;
                 })
                 .catch(error => {
                 console.error("Error fetching location data:", error);
@@ -75,13 +80,12 @@ function getLocation() {
 
 function showPosition(position) {
   console.log(">>> showPosition() was called:", position);
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
     console.log("Latitude:", lat, "Longitude:", lon);
-//   document.getElementById("output").innerText =
-//     `Latitude: ${lat}, Longitude: ${lon}`;
 
-    const locationUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&${units}&${API_KEY}`;
+    //URL pulled from above constant
+    const locationUrl = `${URL}lat=${lat}&lon=${lon}&${units}&${API_KEY}`;
     fetch(locationUrl)
         .then(response => {
         if (!response.ok) {
