@@ -58,18 +58,31 @@
                 <label>Organization Description</label>
                         <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
                 <input type="hidden" id="hiddenTimestamp" name="timestamp">
-                <input type="submit" value="Send Form">
+                <input type="submit" id="submitButton" value="Send Form">
+
                 
             </fieldset>
         </form>
+
+        <div id="membershipCards" class="membership-cards"></div>
+
+        <!-- Single modal element -->
+        <dialog id="membershipModal">
+        <div>
+            <h2 id="modalTitle">Membership Level</h2>
+            <p id="modalDescription"></p>
+            <button id="closeModalButton">Close</button>
+        </div>
+        </dialog>
     </main>
+
     <footer>
         <div class="footer-container">
             <h3>Las Vegas Chamber of Commerce</h3>
             <p>575 W Symphony Park Ave #100</p>
             <p>Las Vegas, NV 89106</p>
             <p>info@vegaschamber.com</p>
-            <p>(702) 641-5822s</p>
+            <p>(702) 641-5822</p>
         </div>
         <div class="footer-container">
             <nav class="sociallinks">
@@ -95,6 +108,6 @@
         </div>
         
     </footer>
-    <script src="scripts/base.js" defer>
-    </script>
+    <script type="module" src="scripts/base.js" defer></script>
+    
 </body>

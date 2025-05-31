@@ -441,4 +441,70 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    
+    
+    const membership = [
+        {
+          level: "NP Membership",
+          cost: "Free",
+          frequency: "Annually",
+          description: "The NP Membership is free and provides access to the basic features of the Chamber, including participation in community discussions and access to public resources.",
+        },
+        {
+          level: "Bronze Membership",
+          cost: "$500",
+          frequency: "Annually",
+          description: "The Bronze Membership includes all NP Membership benefits, plus access to exclusive webinars, workshops, and networking events. Members also receive a quarterly newsletter with industry insights.",
+        },
+        {
+          level: "Silver Membership",
+          cost: "$750",
+          frequency: "Annually",
+          description: "Silver Membership includes all Bronze Membership benefits, plus a dedicated account manager, priority support, and access to premium resources such as industry reports and whitepapers.",
+        },
+        {
+          level: "Gold Membership",
+          cost: "$1000",
+          frequency: "Annually",
+          description: "Gold Membership includes all Silver Membership benefits, plus invitations to exclusive networking events, access to a members-only online forum, and discounts on Chamber-sponsored events and services.",
+        }
+      ];
+    
+      const container = document.getElementById("membershipCards");
+      const modal = document.getElementById("membershipModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDescription = document.getElementById("modalDescription");
+      const closeModalButton = document.getElementById("closeModalButton");
+    
+      if (!container || !modal || !modalTitle || !modalDescription || !closeModalButton) {
+        console.error("Missing required DOM elements. Check your HTML structure.");
+        return;
+      }
+    
+      membership.forEach((item) => {
+        const card = document.createElement("div");
+        card.classList.add("membership-card");
+    
+        const title = document.createElement("h3");
+        title.textContent = item.level;
+    
+        const desc = document.createElement("p");
+        desc.textContent = item.description;
+    
+        const moreInfoBtn = document.createElement("button");
+        moreInfoBtn.textContent = "More Info";
+        moreInfoBtn.addEventListener("click", () => {
+          modalTitle.textContent = item.level;
+          modalDescription.textContent = `${item.description}\n\nCost: ${item.cost} (${item.frequency})`;
+          modal.showModal();
+        });
+    
+        card.appendChild(title);
+        card.appendChild(moreInfoBtn);
+    
+        container.appendChild(card);
+      });
+    
+      closeModalButton.addEventListener("click", () => modal.close());
+
 });
