@@ -24,7 +24,7 @@
         <div class="header-container">
             <img src="images/logo.png" alt="weather logo">
             <div class="header-text">
-            <h1>Local Weather</h1>
+            <h1>City Search</h1>
         </div>
             <button id="menu"></button>
             <nav>
@@ -42,7 +42,7 @@
             <img src="images/hero-sky.jpg" alt="weather">
             
         </div>
-        <div>
+        <div id="city-search-container">
             <lable>Enter ZIP Code (optional):</lable>
             <input type="text" id="zip" name="zip">
             <button onclick="handleSearch()">Search</button>
@@ -50,6 +50,7 @@
             <div id="weather"></div>
             
         </div>
+        <div id="weather-alert"></div>
         <div id="map"></div>
 
     </main>
