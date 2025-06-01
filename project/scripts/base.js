@@ -10,6 +10,7 @@ const units   = 'units=imperial';
 const ALERT_URL = `https://api.openweathermap.org/data/3.0/onecall?`;
 const FORECAST_URL    = `https://api.openweathermap.org/data/2.5/forecast?`;
 const ZIPURL = `https://api.openweathermap.org/data/2.5/weather?`;
+const CURRENT_URL = `https://api.openweathermap.org/data/2.5/weather?`;
 
 let lat = null;
 let lon = null;
@@ -96,6 +97,7 @@ function searchByZip(zip) {
           "No forecast data available for today.";
       }
       fetchWeatherAlerts();
+      fetchCurrentDescription();
     })
     .catch(error => {
       console.error("Error fetching by ZIP:", error);
@@ -167,6 +169,7 @@ function showPosition(position) {
           "No forecast data available for today.";
       }
       fetchWeatherAlerts();
+      fetchCurrentDescription();
     })
     .catch(error => {
       console.error("Error fetching location data:", error);
@@ -211,6 +214,44 @@ function fetchWeatherAlerts() {
         "Error: could not fetch weather alerts.";
     });
 }
+
+
+////////////////////////////////// current weather description //////////////////////////////////
+function fetchCurrentDescription() {
+  // If lat/lon are not set, skip
+  if (lat === null || lon === null) {
+    console.warn("Cannot fetch current description: lat/lon not set yet.");
+    return;
+  }
+
+  // Build URL for Current Weather endpoint:
+  const currentUrl =
+    `${CURRENT_URL}lat=${lat}&lon=${lon}` +
+    `&units=imperial&${API_KEY}`;
+
+  fetch(currentUrl)
+    .then(resp => {
+      if (!resp.ok) {
+        throw new Error(`HTTP error! status: ${resp.status}`);
+      }
+      return resp.json();
+    })
+    .then(data => {
+      // data.weather is an array; take the first item’s description:
+      const desc = data.weather[0].description;
+
+      // Write it into #weather-desc:
+      document.getElementById("weather-desc").innerText =
+        `Current: ${desc.charAt(0).toUpperCase() + desc.slice(1)}`;
+    })
+    .catch(err => {
+      console.error("Error fetching current weather description:", err);
+      document.getElementById("weather-desc").innerText =
+        "Unable to retrieve current description.";
+    });
+}
+
+
 
 function showError(error) {
   console.log(">>> showError() was called:", error);
