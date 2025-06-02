@@ -1,6 +1,15 @@
 
+import { hamburger } from "./menu.js"; 
 
-// base.js
+document.addEventListener("DOMContentLoaded", () => {
+
+///////////////////////////////// Hamburger Menu /////////////////////////////  
+  hamburger({
+    buttonSelector: "#menu",
+    navSelector: ".navigation"
+  });
+  
+});
 
 console.log("base.js loaded successfully");
 
@@ -30,6 +39,8 @@ function handleSearch() {
     getLocation();
   }
 }
+
+window.handleSearch = handleSearch;
 
 function searchByZip(zip) {
   document.getElementById("output").innerText = `Searching for ZIP: ${zip}`;
@@ -272,13 +283,7 @@ function showError(error) {
 }
 
 
-///////////////////////////////// Hamburger Menu /////////////////////////////
-const hamButton  = document.querySelector("#menu");
-const navigation = document.querySelector(".navigation");
-hamButton.addEventListener("click", () => {
-  navigation.classList.toggle("open");
-  hamButton.classList.toggle("open");
-});
+
 
 
 ///////////////////////////////// window permissions /////////////////////////////

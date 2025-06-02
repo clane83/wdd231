@@ -6,7 +6,7 @@
     <!-- css link for the map -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css"/>
     <meta charset="UTF-8">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="./favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WDD 231 – Weather Project - Christina Lane</title>
     <meta name="description" content="christina lane, WDD 231 Weather Project">
@@ -51,14 +51,25 @@
             <div id="weather-desc"></div>
             
         </div>
-        <div id="weather-alert"></div>
-        <div id="map"></div>
+        <canvas id="weather-alert"></canvas>
+        <div id="map">
+            <canvas id="radarCanvas"
+          width="800"
+          height="400"
+          style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* so clicks go through to the map if needed */
+          ">
+  </canvas>
+        </div>
 
     </main>
     <footer>
 
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
-    <script src="scripts/base.js" defer></script>
+    <script type="module" src="scripts/base.js" defer></script>
 </body>
 </html>
