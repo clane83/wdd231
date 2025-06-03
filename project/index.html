@@ -24,14 +24,14 @@
         <div class="header-container">
             <img src="images/logo.png" alt="weather logo">
             <div class="header-text">
-            <h1>City Search</h1>
+            <h1>Local Weather</h1>
         </div>
             <button id="menu"></button>
             <nav>
                 <ul class="navigation">
                     <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="">City Search</a></li>
-                    <li><a href="weekend.html">Weekend</a></li>
+                    <li><a href="">Air Qaulity/UV Index</a></li>
+                    <li><a href="historical.html">Historical Weather</a></li>
         
                 </ul>
             </nav>
@@ -43,26 +43,18 @@
             
         </div>
         <div id="city-search-container">
-            <lable>Enter ZIP Code (optional):</lable>
-            <input type="text" id="zip" name="zip">
+            <lable>Enter ZIP Code  or City Name:</lable>
+            <input type="text" id="zip" name="zip" placeholder="e.g. 10001 or New York">
             <button onclick="handleSearch()">Search</button>
-            <p id="output"></p>
+            <!-- <p id="output"></p> -->
             <div id="weather"></div>
             <div id="weather-desc"></div>
+            <div id="forecast-list"></div>
+            <div id="weather-alert"></div>
             
-        </div>
-        <canvas id="weather-alert"></canvas>
+    
         <div id="map">
-            <canvas id="radarCanvas"
-          width="800"
-          height="400"
-          style="
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none; /* so clicks go through to the map if needed */
-          ">
-  </canvas>
+            
         </div>
 
     </main>

@@ -29,21 +29,27 @@ let map;
 let view;
 let cityName;
 
+window.handleSearch = handleSearch;
+
 function handleSearch() {
-  const zip = document.getElementById("zip").value.trim();
-  if (zip !== "" && /^\d{5}$/.test(zip)) {
-    console.log("User provided ZIP code:", zip);
-    searchByZip(zip);
+  const input = document.getElementById("zip").value.trim();
+  if (/^\d{5}$/.test(input)) {
+    // 5-digit ZIP
+    searchByZip(input);
+  } else if (input.length) {
+    // treat as city name
+    searchByCity(input);
   } else {
-    console.log("No valid ZIP provided → using geolocation");
+    // no input → fall back to geolocation
     getLocation();
   }
 }
 
-window.handleSearch = handleSearch;
 
+
+////////////////////////////////// search by ZIP //////////////////////////////////
 function searchByZip(zip) {
-  document.getElementById("output").innerText = `Searching for ZIP: ${zip}`;
+  // document.getElementById("output").innerText = `Searching for ZIP: ${zip}`;
 
   const zipUrl = `${ZIPURL}zip=${zip}&${API_KEY}`;
 
@@ -70,24 +76,18 @@ function searchByZip(zip) {
         map.getView().setZoom(10);
       }
 
-      // Fetch weather by lat/lon for display
+      // Fetch today’s high/low
       const locationUrl = `${FORECAST_URL}lat=${lat}&lon=${lon}&${units}&${API_KEY}`;
       return fetch(locationUrl);
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.json();
     })
     .then(obj => {
-      console.log("API (Forecast) response:", obj);
-
-      // 4) Compute today’s high & low
+      // Compute and display today’s high/low…
       const todayDate = new Date().getDate();
-      const highs = [];
-      const lows = [];
-
+      const highs = [], lows = [];
       obj.list.forEach(entry => {
         const entryDate = new Date(entry.dt * 1000).getDate();
         if (entryDate === todayDate) {
@@ -95,11 +95,9 @@ function searchByZip(zip) {
           lows.push(entry.main.temp_min);
         }
       });
-
       const highTemp = highs.length ? Math.max(...highs) : null;
       const lowTemp  = lows.length  ? Math.min(...lows)  : null;
 
-      // 5) Update the DOM
       if (highTemp !== null && lowTemp !== null) {
         document.getElementById("weather").innerText =
           `Today’s High: ${highTemp}°F  |  Low: ${lowTemp}°F`;
@@ -107,17 +105,74 @@ function searchByZip(zip) {
         document.getElementById("weather").innerText =
           "No forecast data available for today.";
       }
+
       fetchWeatherAlerts();
       fetchCurrentDescription();
+
+      // ← HERE: also fetch and render the 5-day forecast
+      fetch5DayForecast(lat, lon);
     })
     .catch(error => {
       console.error("Error fetching by ZIP:", error);
       document.getElementById("output").innerText =
         `Error: could not fetch data for that ZIP code.`;
     });
-
-    
 }
+
+////////////////////////////////// search by City Name //////////////////////////////////
+
+async function searchByCity(cityName) {
+  try {
+    // Get lat/lon by city name
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cityName)}&${units}&${API_KEY}`
+    );
+    if (!res.ok) throw new Error(`City "${cityName}" not found`);
+    const data = await res.json();
+    const lat = data.coord.lat;
+    const lon = data.coord.lon;
+
+    // Recenter the map
+    if (map) {
+      const center = ol.proj.fromLonLat([lon, lat]);
+      map.getView().setCenter(center);
+      map.getView().setZoom(10);
+    }
+
+    // Fetch today’s high/low & display (same as ZIP branch)
+    const todayRes = await fetch(`${FORECAST_URL}lat=${lat}&lon=${lon}&${units}&${API_KEY}`);
+    if (!todayRes.ok) throw new Error("Forecast not found");
+    const todayData = await todayRes.json();
+
+    const todayDate = new Date().getDate();
+    const highs = [], lows = [];
+    todayData.list.forEach(entry => {
+      const entryDate = new Date(entry.dt * 1000).getDate();
+      if (entryDate === todayDate) {
+        highs.push(entry.main.temp_max);
+        lows.push(entry.main.temp_min);
+      }
+    });
+    const highTemp = highs.length ? Math.max(...highs) : null;
+    const lowTemp  = lows.length  ? Math.min(...lows)  : null;
+    if (highTemp !== null && lowTemp !== null) {
+      document.getElementById("weather").innerText =
+        `Today’s High: ${highTemp}°F  |  Low: ${lowTemp}°F`;
+    } else {
+      document.getElementById("weather").innerText =
+        "No forecast data available for today.";
+    }
+
+    // Fetch alerts, current description, and 5-day
+    fetchWeatherAlerts(lat, lon);
+    fetchCurrentDescription(lat, lon);
+    fetch5DayForecast(lat, lon);
+  } catch (err) {
+    alert("Error searching by city: " + err.message);
+    console.error(err);
+  }
+}
+
 
 function getLocation() {
   console.log(">>> getLocation() was called");
@@ -143,23 +198,16 @@ function showPosition(position) {
     map.getView().setZoom(10);
   }
 
-  // Fetch weather by lat/lon for display
+  // Fetch today’s high/low
   const locationUrl = `${FORECAST_URL}lat=${lat}&lon=${lon}&${units}&${API_KEY}`;
   fetch(locationUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.json();
     })
     .then(obj => {
-      console.log("API (Forecast) response:", obj);
-
-      // 3) Compute today’s high & low
       const todayDate = new Date().getDate();
-      const highs = [];
-      const lows = [];
-
+      const highs = [], lows = [];
       obj.list.forEach(entry => {
         const entryDate = new Date(entry.dt * 1000).getDate();
         if (entryDate === todayDate) {
@@ -167,11 +215,9 @@ function showPosition(position) {
           lows.push(entry.main.temp_min);
         }
       });
-
       const highTemp = highs.length ? Math.max(...highs) : null;
       const lowTemp  = lows.length  ? Math.min(...lows)  : null;
 
-      // 4) Update the DOM
       if (highTemp !== null && lowTemp !== null) {
         document.getElementById("weather").innerText =
           `Today’s High: ${highTemp}°F  |  Low: ${lowTemp}°F`;
@@ -179,8 +225,12 @@ function showPosition(position) {
         document.getElementById("weather").innerText =
           "No forecast data available for today.";
       }
+
       fetchWeatherAlerts();
       fetchCurrentDescription();
+
+      // ← HERE: also fetch and render the 5-day forecast
+      fetch5DayForecast(lat, lon);
     })
     .catch(error => {
       console.error("Error fetching location data:", error);
@@ -188,6 +238,98 @@ function showPosition(position) {
         "Error: could not fetch weather data for your location.";
     });
 }
+
+////////////////////////////////// 5day forecast //////////////////////////////////
+  async function fetch5DayForecast(lat, lon) {
+    try {
+      // 5-day/3-hour forecast from OpenWeather
+      const forecastRes = await fetch(
+        `${FORECAST_URL}&lat=${lat}&lon=${lon}&${units}&${API_KEY}`
+      );
+      if (!forecastRes.ok) {
+        throw new Error("Could not fetch 5-day forecast");
+      }
+      const forecastData = await forecastRes.json();
+
+      // list entries by “YYYY-MM-DD”
+      const dailyData = {};
+      forecastData.list.forEach((item) => {
+        const date = item.dt_txt.split(" ")[0];
+        if (!dailyData[date]) {
+          dailyData[date] = [];
+        }
+        dailyData[date].push(item);
+      });
+
+      // high/low/average/choose an icon for each day
+      const labels = Object.keys(dailyData); // Date format "2025-06-02"
+      const highTemps = [];
+      const lowTemps = [];
+      const avgTemps = [];
+      const icons = [];
+
+      labels.forEach((date) => {
+        const temps = dailyData[date].map((d) => d.main.temp);
+        const max = Math.max(...temps);
+        const min = Math.min(...temps);
+        const avg = temps.reduce((sum, t) => sum + t, 0) / temps.length;
+
+        highTemps.push(Math.round(max));
+        lowTemps.push(Math.round(min));
+        avgTemps.push(Math.round(avg));
+
+        // pick the “noon” icon if it exists, otherwise the first one
+        const middayEntry = dailyData[date].find((d) =>
+          d.dt_txt.includes("12:00:00")
+        );
+        const iconCode =
+          (middayEntry && middayEntry.weather[0].icon) ||
+          dailyData[date][0].weather[0].icon;
+        icons.push(iconCode);
+      });
+
+      // place into #forecast-list
+      const listDiv = document.getElementById("forecast-list");
+      if (!listDiv) {
+        console.warn("No element with id=forecast-list found.");
+        return;
+      }
+
+      listDiv.innerHTML = labels
+        .map(
+          (date, i) => `
+        <div
+          style="
+            border: 1px solid #ccc;
+            padding: 0.6rem;
+            margin-bottom: 0.6rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+          "
+        >
+          <div style="flex: 1;">
+            <strong>${date}</strong><br />
+            High: ${highTemps[i]}°F<br />
+            Low: ${lowTemps[i]}°F<br />
+            Avg: ${avgTemps[i]}°F
+          </div>
+          <div>
+            <img
+              src="https://openweathermap.org/img/wn/${icons[i]}@2x.png"
+              alt="weather icon"
+              style="width:48px; height:48px;"
+            />
+          </div>
+        </div>
+      `
+        )
+        .join("");
+    } catch (err) {
+      console.error("fetch5DayForecast() error:", err);
+      alert("Error fetching 5-day forecast: " + err.message);
+    }
+  }
 
 ////////////////////////////////// weather alerts //////////////////////////////////
 function fetchWeatherAlerts() {
@@ -207,13 +349,14 @@ function fetchWeatherAlerts() {
     .then(data => {
       console.log("API (Alerts) response:", data);
 
-      // (3) Check if `alerts` array exists
+      // Check if `alerts` array exists
       const alertDiv = document.getElementById("weather-alert");
       if (data.alerts && data.alerts.length > 0) {
         // Display the first alert’s event and description
         const firstAlert = data.alerts[0];
         alertDiv.innerText =
           `⚠️ ${firstAlert.event}: ${firstAlert.description}`;
+          console.log("Weather alert:" + firstAlert.event + " - " + firstAlert.description);
       } else {
         alertDiv.innerText = "No weather alerts for your location.";
       }

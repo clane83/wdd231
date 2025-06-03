@@ -3,8 +3,10 @@
 <head>
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="">
+    <!-- css link for the map -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css"/>
     <meta charset="UTF-8">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="./favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WDD 231 – Weather Project - Christina Lane</title>
     <meta name="description" content="christina lane, WDD 231 Weather Project">
@@ -28,30 +30,30 @@
             <nav>
                 <ul class="navigation">
                     <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="">City Search</a></li>
-                    <li><a href="">Weekend</a></li>
+                    <li><a href="">Air Qaulity/UV Index</a></li>
+                    <li><a href="historical.html">Historical Weather</a></li>
         
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <h2>Weekend page</h2>
         <div class="hero">
             <img src="images/hero-sky.jpg" alt="weather">
             
         </div>
-        <div>
-            <lable>Enter ZIP Code (optional):</lable>
-            <input type="text" id="zip" name="zip">
-            <button onclick="handleSearch()">Search</button>
-            <p id="output"></p>
-            <div id="weather"></div>
-        </div>
+
+        <form id="history-form">
+            <input type="text" id="history-location" placeholder="Enter city or ZIP code" required>
+            <button type="submit">Load History</button>
+        </form>
+
+        <canvas id="weatherChart" width="600" height="400"></canvas>
     </main>
     <footer>
-
+        
     </footer>
-    <script src="scripts/base.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="scripts/historical.js"> defer</script>
 </body>
 </html>
