@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/base-large.css">
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDD 231 – Class Project - Christina Lane</title>
+    <meta name="description" content="christina lane, WDD 231 Class Project">
+    <meta name="author" content="Christina Lane">
+    <meta property="og:url"                content="https://clane83.github.io/wdd231/chamber"/>
+    <meta property="og:title"              content="Christina Lane"/>
+    <meta property="og:description"        content="WDD231 Class project"/>
+    <meta property="og:image"              content="https://clane83.github.io/wdd231/images/lasvegas.jpg"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/lasvegas.jpg" alt="las vegas">
+            <div class="header-text">
+            <h1>Las Vegas</h1>
+            <h2>Chamber of Commerce</h2>
+        </div>
+            <button id="menu"></button>
+            <nav>
+                <ul class="navigation">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="">Discover</a></li>
+                    <li><a href="directory.html">Directory</a></li>
+                    <li><a href="join.html" class="active">Join</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="hero">
+            <img src="images/las-vegas-strip.jpg" alt="las vegas strip">
+            <p>Become a Member – Join today!</p>
+        </div>
+        <div id="join">
+            <form method="get" action="thankyou.html" class="form">
+                <fieldset>
+                    <label>Organization Name</label><input type="text" id="organization" name="oname">
+                    <label>First Name</label><input type="text" id="fname" name="fname">
+                    <label>Last Name</label><input type="text" id="lname" name="lname">
+                    <label>Title in organization</label><input type="text" id="title" name="title">
+                    <label>Email</label><input type="email" id="email" name="email" required>
+                    <label>Phone Number</label><input type="tel" id="phone" name="phone" required>
+                    <div class="member-container">
+                        <div class="member-label">Membership Level</div>
+                        <div class="member-options">
+                            <label><input type="radio" id="np" name="level" value="np" required>NP Member</label>
+                            <label><input type="radio" id="bronze" name="level" value="bronze">Bronze</label>
+                            <label><input type="radio" id="silver" name="level" value="silver">Silver</label>
+                            <label><input type="radio" id="gold" name="level" value="gold">Gold</label>
+                            
+                        </div>
+                    </div>
+                    <label>Organization Description</label>
+                            <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
+                    <input type="hidden" id="hiddenTimestamp" name="timestamp">
+                    <input type="submit" value="Send Form">
+                    
+                </fieldset>
+            </form>
+
+            <div id="membershipCards" class="membership-cards"></div>
+
+            <!-- Single modal element -->
+            <dialog id="membershipModal">
+            <div>
+                <h2 id="modalTitle">Membership Level</h2>
+                <p id="modalDescription"></p>
+                <button id="closeModalButton">Close</button>
+            </div>
+            </dialog>
+        </div>
+
+    </main>
+    <footer>
+        <div class="footer-container">
+            <h3>Las Vegas Chamber of Commerce</h3>
+            <p>575 W Symphony Park Ave #100</p>
+            <p>Las Vegas, NV 89106</p>
+            <p>info@vegaschamber.com</p>
+            <p>(702) 641-5822</p>
+        </div>
+        <div class="footer-container">
+            <nav class="sociallinks">
+                <a href="https://facebook.com">
+                    <img src="images/facebook_icon.svg" alt="Facebook">
+                </a>
+                <a href="https://twitter.com">
+                    <img src="images/twitter_icon.svg" alt="Twitter">
+                </a>
+                <a href="https://instagram.com">
+                    <img src="images/instagram_icon.svg" alt="Instagram">
+                </a>
+            </nav>
+        </div>
+        <div class="footer-container">
+            <h3>WDD231 Class Project</h3>
+            <p>Christina Lane</p>
+            <p>
+                © <span id="currentYear"></span> Las Vegas Chamber of Commerce
+            </p>
+            <p id="lastModified">
+            </p>
+        </div>
+        
+    </footer>
+    <script src="scripts/base.js" defer>
+    </script>
+</body>
