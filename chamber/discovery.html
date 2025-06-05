@@ -37,48 +37,7 @@
         </div>
     </header>
     <main>
-        <div class="hero">
-            <img src="images/las-vegas-strip.jpg" alt="las vegas strip">
-            <p>Become a Member – Join today!</p>
-        </div>
-        <div id="join">
-            <form method="get" action="thankyou.html" class="form">
-                <fieldset>
-                    <label>Organization Name</label><input type="text" id="organization" name="oname">
-                    <label>First Name</label><input type="text" id="fname" name="fname">
-                    <label>Last Name</label><input type="text" id="lname" name="lname">
-                    <label>Title in organization</label><input type="text" id="title" name="title">
-                    <label>Email</label><input type="email" id="email" name="email" required>
-                    <label>Phone Number</label><input type="tel" id="phone" name="phone" required>
-                    <div class="member-container">
-                        <div class="member-label">Membership Level</div>
-                        <div class="member-options">
-                            <label><input type="radio" id="np" name="level" value="np" required>NP Member</label>
-                            <label><input type="radio" id="bronze" name="level" value="bronze">Bronze</label>
-                            <label><input type="radio" id="silver" name="level" value="silver">Silver</label>
-                            <label><input type="radio" id="gold" name="level" value="gold">Gold</label>
-                            
-                        </div>
-                    </div>
-                    <label>Organization Description</label>
-                            <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
-                    <input type="hidden" id="hiddenTimestamp" name="timestamp">
-                    <input type="submit" value="Send Form">
-                    
-                </fieldset>
-            </form>
 
-            <div id="membershipCards" class="membership-cards"></div>
-
-            <!-- Single modal element -->
-            <dialog id="membershipModal">
-            <div>
-                <h2 id="modalTitle">Membership Level</h2>
-                <p id="modalDescription"></p>
-                <button id="closeModalButton">Close</button>
-            </div>
-            </dialog>
-        </div>
 
     </main>
     <footer>
