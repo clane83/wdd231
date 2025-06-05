@@ -1,45 +1,7 @@
-// import {discover} from "../data/discover.js";
+import {discover} from "../data/discover.js";
 // console.log(discover);
 
-// const discoverCity = document.querySelector("#discovercity");
-// const mydiscover = document.querySelector("#mydiscover");
 
-// const mytitle = document.querySelector("#mydiscover h2");
-// const mydescription = document.querySelector("#mydiscover p");
-// const myaddress = document.querySelector("#mydiscover address");
-// const myclose = document.querySelector("#mydiscover button");
-
-// myclose.addEventListener("click", () => {
-//     mydiscover.close();
-// });
-
-// function displayDiscover(data) {
-//     console.log(data);
-//     data.forEach(place => {
-//         console.log(place);
-//         const img = document.createElement('img');
-//         const button = document.createElement('button');
-
-//         img.src = place.img;
-//         img.alt = `${place.place} image`;
-//         button.textContent = "Learn More";
-        
-//         discoverCity.appendChild(img);
-//         discoverCity.appendChild(button);
-//         button.addEventListener("click", () => showStuff(place));
-
-//     })
-// }
-
-// function showStuff(place) {
-//     mytitle.innerHTML = place.place;
-//     myaddress.innerHTML = place.address;
-//     mydescription.innerHTML = place.description;
-//     mydiscover.showModal();
-
-// }
-// //pass imported discover to displayDiscover function
-// displayDiscover(discover);
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -59,160 +21,168 @@ document.addEventListener("DOMContentLoaded", () => {
     // Global variable to store fetched members
     let cachedMembers = null;
 
-    async function getMembersData() {
-        const businessContainer = document.querySelector("#business-container");
-        if (businessContainer) {
-            businessContainer.innerHTML = "<p>Loading...</p>";
-        }
-        try {
-            console.log("Fetching data from members.json...");
-            const response = await fetch("scripts/members.json");
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+    
+        async function getMembersData() {
+            const businessContainer = document.querySelector("#business-container");
+            if (businessContainer) {
+                businessContainer.innerHTML = "<p>Loading...</p>";
             }
-            const data = await response.json();
-            console.log("Data fetched successfully:", data);
+            try {
+                console.log("Fetching data from members.json...");
+                const response = await fetch("scripts/members.json");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Data fetched successfully:", data);
+        
+                // Access the 'members' array from the JSON
+                cachedMembers = data.members;
+        
+                // Standardize membershipLevel to lowercase
+                cachedMembers.forEach(member => {
+                    member.membershipLevel = member.membershipLevel.toLowerCase();
+                });
+        
+                if (businessContainer) {
+                    createBusinessView(cachedMembers, false);
+                }
+                if (document.querySelector("#spotlights")) {
+                    createSpotlightView();
+                }
+            } catch (error) {
+                console.error("Error fetching the JSON data:", error);
+                if (businessContainer) {
+                    businessContainer.innerHTML = "<p>Error loading businesses. Please try again later.</p>";
+                }
+            }
+        }
     
-            // Access the 'members' array from the JSON
-            cachedMembers = data.members;
+        
     
-            // Standardize membershipLevel to lowercase
-            cachedMembers.forEach(member => {
-                member.membershipLevel = member.membershipLevel.toLowerCase();
+        function createBusinessView(filteredMembers, isListView) {
+            console.log("Creating business view:", filteredMembers);
+            const container = document.getElementById("business-container");
+            if (!container) {
+                console.error("Element with id business-container not found in the DOM.");
+                return;
+            }
+    
+            container.innerHTML = ""; // Clear existing content
+    
+            filteredMembers.forEach((member) => {
+                console.log("Processing member:", member);
+                if (isListView) {
+                    // Create list view
+                    let listItem = document.createElement("div");
+                    listItem.classList.add("business-list-item");
+    
+                    const businessName = document.createElement("h3");
+                    const businessTagLine = document.createElement("p");
+                    const email = document.createElement("p");
+                    const phone = document.createElement("p");
+                    const url = document.createElement("a");
+    
+                    businessName.textContent = member.businessName;
+                    businessTagLine.textContent = member.businessTagLine;
+                    email.textContent = `Email: ${member.email}`;
+                    phone.textContent = `Phone: ${member.phone}`;
+                    url.textContent = "Visit Website";
+                    url.href = member.url;
+                    url.target = "_blank";
+    
+                    listItem.appendChild(businessName);
+                    listItem.appendChild(businessTagLine);
+                    listItem.appendChild(email);
+                    listItem.appendChild(phone);
+                    listItem.appendChild(url);
+    
+                    container.appendChild(listItem);
+                } else {
+                    // Create card view
+                    let card = document.createElement("section");
+                    card.classList.add("business-card");
+    
+                    const section1 = document.createElement("div");
+                    section1.classList.add("card-section1");
+                    const businessName = document.createElement("h3");
+                    const businessTagLine = document.createElement("p");
+    
+                    businessName.textContent = member.businessName;
+                    businessTagLine.textContent = member.businessTagLine;
+                    section1.appendChild(businessName);
+                    section1.appendChild(businessTagLine);
+    
+                    const section2 = document.createElement("div");
+                    section2.classList.add("card-section2");
+                    const image = document.createElement("img");
+                    const email = document.createElement("p");
+                    const phone = document.createElement("p");
+                    const url = document.createElement("a");
+    
+                    image.setAttribute("src", member.imageURL || "images/fallback-image.png");
+                    image.setAttribute("alt", `${member.businessName} logo`);
+                    image.onerror = () => {
+                        image.src = "images/fallback-image.png"; // Fallback image
+                    };
+                    email.textContent = `Email: ${member.email}`;
+                    phone.textContent = `Phone: ${member.phone}`;
+                    url.textContent = "Visit Website";
+                    url.href = member.url;
+                    url.target = "_blank";
+    
+                    section2.appendChild(image);
+                    section2.appendChild(email);
+                    section2.appendChild(phone);
+                    section2.appendChild(url);
+    
+                    card.appendChild(section1);
+                    card.appendChild(section2);
+    
+                    container.appendChild(card);
+                }
             });
-    
-            createBusinessView(cachedMembers, false); // Display card view by default
-            createSpotlightView(); // Call spotlight view here
-        } catch (error) {
-            console.error("Error fetching the JSON data:", error);
-            if (businessContainer) {
-                businessContainer.innerHTML = "<p>Error loading businesses. Please try again later.</p>";
-            }
         }
-    }
-
     
-
-    function createBusinessView(filteredMembers, isListView) {
-        console.log("Creating business view:", filteredMembers);
-        const container = document.getElementById("business-container");
-        if (!container) {
-            console.error("Element with id business-container not found in the DOM.");
-            return;
+        const listViewButton = document.querySelector("#listView");
+        const cardViewButton = document.querySelector("#cardView");
+        const businessContainer = document.querySelector("#business-container");
+    
+        // Switch to list view
+        if (listViewButton) {
+            listViewButton.addEventListener("click", () => {
+                if (businessContainer) {
+                    businessContainer.classList.remove("card-view");
+                    businessContainer.classList.add("list-view");
+                }
+                if (cachedMembers) {
+                    createBusinessView(cachedMembers, true);
+                } else {
+                    getMembersData(); // Refetch if no data
+                }
+            });
         }
-
-        container.innerHTML = ""; // Clear existing content
-
-        filteredMembers.forEach((member) => {
-            console.log("Processing member:", member);
-            if (isListView) {
-                // Create list view
-                let listItem = document.createElement("div");
-                listItem.classList.add("business-list-item");
-
-                const businessName = document.createElement("h3");
-                const businessTagLine = document.createElement("p");
-                const email = document.createElement("p");
-                const phone = document.createElement("p");
-                const url = document.createElement("a");
-
-                businessName.textContent = member.businessName;
-                businessTagLine.textContent = member.businessTagLine;
-                email.textContent = `Email: ${member.email}`;
-                phone.textContent = `Phone: ${member.phone}`;
-                url.textContent = "Visit Website";
-                url.href = member.url;
-                url.target = "_blank";
-
-                listItem.appendChild(businessName);
-                listItem.appendChild(businessTagLine);
-                listItem.appendChild(email);
-                listItem.appendChild(phone);
-                listItem.appendChild(url);
-
-                container.appendChild(listItem);
-            } else {
-                // Create card view
-                let card = document.createElement("section");
-                card.classList.add("business-card");
-
-                const section1 = document.createElement("div");
-                section1.classList.add("card-section1");
-                const businessName = document.createElement("h3");
-                const businessTagLine = document.createElement("p");
-
-                businessName.textContent = member.businessName;
-                businessTagLine.textContent = member.businessTagLine;
-                section1.appendChild(businessName);
-                section1.appendChild(businessTagLine);
-
-                const section2 = document.createElement("div");
-                section2.classList.add("card-section2");
-                const image = document.createElement("img");
-                const email = document.createElement("p");
-                const phone = document.createElement("p");
-                const url = document.createElement("a");
-
-                image.setAttribute("src", member.imageURL || "images/fallback-image.png");
-                image.setAttribute("alt", `${member.businessName} logo`);
-                image.onerror = () => {
-                    image.src = "images/fallback-image.png"; // Fallback image
-                };
-                email.textContent = `Email: ${member.email}`;
-                phone.textContent = `Phone: ${member.phone}`;
-                url.textContent = "Visit Website";
-                url.href = member.url;
-                url.target = "_blank";
-
-                section2.appendChild(image);
-                section2.appendChild(email);
-                section2.appendChild(phone);
-                section2.appendChild(url);
-
-                card.appendChild(section1);
-                card.appendChild(section2);
-
-                container.appendChild(card);
-            }
-        });
-    }
-
-    const listViewButton = document.querySelector("#listView");
-    const cardViewButton = document.querySelector("#cardView");
-    const businessContainer = document.querySelector("#business-container");
-
-    // Switch to list view
-    if (listViewButton) {
-        listViewButton.addEventListener("click", () => {
-            if (businessContainer) {
-                businessContainer.classList.remove("card-view");
-                businessContainer.classList.add("list-view");
-            }
-            if (cachedMembers) {
-                createBusinessView(cachedMembers, true);
-            } else {
-                getMembersData(); // Refetch if no data
-            }
-        });
-    }
-
-    // Switch to card view
-    if (cardViewButton) {
-        cardViewButton.addEventListener("click", () => {
-            if (businessContainer) {
-                businessContainer.classList.remove("list-view");
-                businessContainer.classList.add("card-view");
-            }
-            if (cachedMembers) {
-                createBusinessView(cachedMembers, false);
-            } else {
-                getMembersData(); // Refetch if no data
-            }
-        });
-    }
-
-    // Fetch and display members on load
-    getMembersData();
+    
+        // Switch to card view
+        if (cardViewButton) {
+            cardViewButton.addEventListener("click", () => {
+                if (businessContainer) {
+                    businessContainer.classList.remove("list-view");
+                    businessContainer.classList.add("card-view");
+                }
+                if (cachedMembers) {
+                    createBusinessView(cachedMembers, false);
+                } else {
+                    getMembersData(); // Refetch if no data
+                }
+            });
+        }
+    
+        if (document.querySelector("#business-container")){
+        // Fetch and display members on load
+        getMembersData();
+        }
+    
 
 
     // ids for required inputs on index.html
@@ -310,7 +280,10 @@ document.addEventListener("DOMContentLoaded", () => {
         captionDesc.textContent = desc;
     }
 
-    apiFetch();
+    if(document.querySelector('#current-temp')) {
+        apiFetch();
+    }
+    
 
 
     async function fetchForecast() {
@@ -368,7 +341,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
+    if (document.querySelector("#forecast-container")) {
     fetchForecast();
+    }
+
+
+    
 
 
 
@@ -446,7 +424,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    createSpotlightView();
+    if (document.querySelector("#spotlights")) {
+        createSpotlightView();
+      }
 
 
 
@@ -545,36 +525,77 @@ document.addEventListener("DOMContentLoaded", () => {
       const modalDescription = document.getElementById("modalDescription");
       const closeModalButton = document.getElementById("closeModalButton");
     
-      if (!container || !modal || !modalTitle || !modalDescription || !closeModalButton) {
-        console.error("Missing required DOM elements. Check your HTML structure.");
-        return;
-      }
-    
-      membership.forEach((item) => {
-        const card = document.createElement("div");
-        card.classList.add("membership-card");
-    
-        const title = document.createElement("h3");
-        title.textContent = item.level;
-    
-        const desc = document.createElement("p");
-        desc.textContent = item.description;
-    
-        const moreInfoBtn = document.createElement("button");
-        moreInfoBtn.textContent = "More Info";
-        moreInfoBtn.addEventListener("click", () => {
-          modalTitle.textContent = item.level;
-          modalDescription.textContent = `${item.description}\n\nCost: ${item.cost} (${item.frequency})`;
-          modal.showModal();
-        });
-    
-        card.appendChild(title);
-        card.appendChild(moreInfoBtn);
-    
-        container.appendChild(card);
-      });
-    
-      closeModalButton.addEventListener("click", () => modal.close());
+      if (container && modal && modalTitle && modalDescription && closeModalButton) {
+        membership.forEach((item) => {
+            const card = document.createElement("div");
+            card.classList.add("membership-card");
 
+            const title = document.createElement("h3");
+            title.textContent = item.level;
+
+            const desc = document.createElement("p");
+            desc.textContent = item.description;
+
+            const moreInfoBtn = document.createElement("button");
+            moreInfoBtn.textContent = "More Info";
+            moreInfoBtn.addEventListener("click", () => {
+            modalTitle.textContent = item.level;
+            modalDescription.textContent = `${item.description}\n\nCost: ${item.cost} (${item.frequency})`;
+            modal.showModal();
+            });
+
+            card.appendChild(title);
+            card.appendChild(moreInfoBtn);
+
+            container.appendChild(card);
+        });
+
+        closeModalButton.addEventListener("click", () => modal.close());
+}
+      
+
+      
 
 });
+
+if (document.querySelector("#mydiscover")) {
+    const discoverCity = document.querySelector("#discovercity");
+    const mydiscover = document.querySelector("#mydiscover");
+
+    const mytitle = document.querySelector("#mydiscover h2");
+    const mydescription = document.querySelector("#mydiscover p");
+    const myaddress = document.querySelector("#mydiscover address");
+    const myclose = document.querySelector("#mydiscover button");
+
+    myclose.addEventListener("click", () => {
+        mydiscover.close();
+    });
+
+
+    discover.forEach(place => {
+        const card = document.createElement("div");
+        card.classList.add("discover-card");
+        console.log(place);
+        const img = document.createElement('img');
+        const button = document.createElement('button');
+
+        img.src = place.img;
+        img.alt = `${place.place} image`;
+        button.textContent = "Learn More";
+        
+        card.appendChild(img);
+        card.appendChild(button);
+        button.addEventListener("click", () => openDiscoverModal(place));
+        discoverCity.appendChild(card);
+    })
+
+
+    function openDiscoverModal(place) {
+        mytitle.innerHTML = place.place;
+        myaddress.innerHTML = place.address;
+        mydescription.innerHTML = place.description;
+        mydiscover.showModal();
+
+    }
+
+  }
