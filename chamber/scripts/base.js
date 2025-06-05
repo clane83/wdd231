@@ -22,42 +22,57 @@ document.addEventListener("DOMContentLoaded", () => {
     let cachedMembers = null;
 
     
-        async function getMembersData() {
-            const businessContainer = document.querySelector("#business-container");
-            if (businessContainer) {
-                businessContainer.innerHTML = "<p>Loading...</p>";
+    async function getMembersData() {
+        const businessContainer = document.querySelector("#business-container");
+        if (businessContainer) {
+            businessContainer.innerHTML = "<p>Loading...</p>";
+        }
+    
+        try {
+            const response = await fetch("scripts/members.json");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+    
+            const data = await response.json();
+            cachedMembers = data.members;
+    
+            cachedMembers.forEach(member => {
+                member.membershipLevel = member.membershipLevel.toLowerCase();
+            });
+    
+            if (businessContainer) {
+                createBusinessView(cachedMembers, false);
+            }
+    
+        } catch (error) {
+            console.error("Error fetching members:", error);
+            if (businessContainer) {
+                businessContainer.innerHTML = "<p>Error loading businesses. Please try again later.</p>";
+            }
+        }
+    }
+    
+
+        async function loadSpotlightData() {
             try {
-                console.log("Fetching data from members.json...");
                 const response = await fetch("scripts/members.json");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
                 const data = await response.json();
-                console.log("Data fetched successfully:", data);
-        
-                // Access the 'members' array from the JSON
                 cachedMembers = data.members;
         
-                // Standardize membershipLevel to lowercase
                 cachedMembers.forEach(member => {
                     member.membershipLevel = member.membershipLevel.toLowerCase();
                 });
         
-                if (businessContainer) {
-                    createBusinessView(cachedMembers, false);
-                }
                 if (document.querySelector("#spotlights")) {
                     createSpotlightView();
                 }
             } catch (error) {
-                console.error("Error fetching the JSON data:", error);
-                if (businessContainer) {
-                    businessContainer.innerHTML = "<p>Error loading businesses. Please try again later.</p>";
-                }
+                console.error("Failed to load spotlight data:", error);
             }
         }
-    
+        
         
     
         function createBusinessView(filteredMembers, isListView) {
@@ -77,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     let listItem = document.createElement("div");
                     listItem.classList.add("business-list-item");
     
+
                     const businessName = document.createElement("h3");
                     const businessTagLine = document.createElement("p");
                     const email = document.createElement("p");
@@ -173,15 +189,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (cachedMembers) {
                     createBusinessView(cachedMembers, false);
                 } else {
-                    getMembersData(); // Refetch if no data
+                    getMembersData();
                 }
             });
         }
     
-        if (document.querySelector("#business-container")){
-        // Fetch and display members on load
-        getMembersData();
-        }
+        if (document.querySelector("#business-container")) {
+    getMembersData();
+} else if (document.querySelector("#spotlights")) {
+    loadSpotlightData(); // ✅ only fetch spotlight data when needed
+}
+        
     
 
 
