@@ -347,6 +347,7 @@ form input, textarea {
 
 div .membership-card {
     border: 1px solid;
+    border-radius: 5px 20px;
     margin: 5px;
     /* align-items: center;
     align-self: center; */
