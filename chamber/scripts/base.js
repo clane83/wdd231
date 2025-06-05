@@ -1,3 +1,47 @@
+import {discover} from "../data/discover.js";
+console.log(discover);
+
+const discoverCity = document.querySelector("#discovercity");
+const mydiscover = document.querySelector("#mydiscover");
+
+const mytitle = document.querySelector("#mydiscover h2");
+const mydescription = document.querySelector("#mydiscover p");
+const myaddress = document.querySelector("#mydiscover address");
+const myclose = document.querySelector("#mydiscover button");
+
+myclose.addEventListener("click", () => {
+    mydiscover.close();
+});
+
+function displayDiscover(data) {
+    console.log(data);
+    data.forEach(place => {
+        console.log(place);
+        const img = document.createElement('img');
+        const button = document.createElement('button');
+
+        img.src = place.img;
+        img.alt = `${place.place} image`;
+        button.textContent = "Learn More";
+        
+        discoverCity.appendChild(img);
+        discoverCity.appendChild(button);
+        button.addEventListener("click", () => showStuff(place));
+
+    })
+}
+
+function showStuff(place) {
+    mytitle.innerHTML = place.place;
+    myaddress.innerHTML = place.address;
+    mydescription.innerHTML = place.description;
+    mydiscover.showModal();
+
+}
+//pass imported discover to displayDiscover function
+displayDiscover(discover);
+
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("currentYear").innerHTML = new Date().getFullYear();
     
