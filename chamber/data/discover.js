@@ -13,7 +13,7 @@ export const discover = [
         "name": "The Venetian",
         "address": "3355 S Las Vegas Blvd, Las Vegas, NV 89109",
         "description": "Gondola rides, luxury shopping, and fine dining in a replica of Venice.",
-        "img": "images/smith-center.jpg"
+        "img": "images/gondola.jpg"
         
     },
     {
