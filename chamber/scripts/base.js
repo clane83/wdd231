@@ -583,11 +583,14 @@ if (document.querySelector("#mydiscover")) {
     const mytitle = document.querySelector("#mydiscover h2");
     const mydescription = document.querySelector("#mydiscover p");
     const myaddress = document.querySelector("#mydiscover address");
-    const myclose = document.querySelector("#mydiscover button");
+    const myclose = document.getElementById("myclose");
 
-    myclose.addEventListener("click", () => {
-        mydiscover.close();
-    });
+    
+    if (myclose && mydiscover && typeof mydiscover.close === 'function') {
+        myclose.addEventListener("click", () => {
+          mydiscover.close();
+        });
+      }
 
 
     discover.forEach(place => {
