@@ -595,18 +595,18 @@ if (document.querySelector("#mydiscover")) {
         card.classList.add("discover-card");
         console.log(place);
         const placeName = document.createElement("h3")
-        const placeAddress = document.createElement("p");
+        // const placeAddress = document.createElement("p");
         const img = document.createElement('img');
         const button = document.createElement('button');
 
         placeName.textContent = place.name;
-        placeAddress.textContent = place.address;
+        // placeAddress.textContent = place.address;
         img.src = place.img;
         img.alt = `${place.place} image`;
         button.textContent = "Learn More";
         
         card.appendChild(placeName);
-        card.appendChild(placeAddress);
+        // card.appendChild(placeAddress);
         card.appendChild(img);
         card.appendChild(button);
         button.addEventListener("click", () => openDiscoverModal(place));

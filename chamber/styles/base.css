@@ -371,15 +371,10 @@ div .membership-card button {
     grid-template-columns: 1fr;
 }
 
-/* #discovercity .discover-card{
-    padding: 5px;
-    margin: 20px
-} */
-
 .discover-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr .5fr;
     background-color: var(--header-background-color);
     border-radius: 20px;
     margin: 10px;
@@ -422,6 +417,7 @@ div .membership-card button {
     width: auto;
     margin-right: 20px;
     margin-left: 20px;
+    margin-bottom: 10px;
 }
 
 

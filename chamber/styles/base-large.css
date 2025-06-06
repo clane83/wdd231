@@ -20,6 +20,11 @@
     margin-right: 10px;
   }
 
+  #discovercity {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
   /************************* business card ******************************/
   #business-container, #spotlights {
     display: grid;
@@ -64,6 +69,10 @@
 @media screen and (min-width: 1024px) {
   
   /************************* Header ******************************/
+  #discovercity {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 
   .header-container {
       display: grid; /* Use grid layout for larger screens */
