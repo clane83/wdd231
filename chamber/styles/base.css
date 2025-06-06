@@ -403,11 +403,15 @@ div .membership-card button {
     grid-column: 2/3;
     grid-row: 1/2;
     padding-left: 20px;
+    font-size:x-large;
+    margin-top: auto;
+    margin-bottom: 0;
 }
 
 .discover-card p {
     grid-column: 2/3;
     grid-row: 2/3;
+    padding-left: 20px;
 }
 
 .discover-card button {

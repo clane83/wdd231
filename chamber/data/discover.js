@@ -5,7 +5,7 @@ export const discover = [
         "name": "Las Vegas Sign",
         "address": "5100 Las Vegas Blvd S, Las Vegas, NV 89119",
         "description": "Welcome to the iconic Las Vegas sign, a must-see landmark for visitors.",
-        "img": "images/lasvegas.jpg"
+        "img": "images/lasvegassign.jpg"
         
     },
     {
