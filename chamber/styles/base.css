@@ -434,7 +434,7 @@ div .membership-card button {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-    margin: 0;
+    margin: 50px;
     padding: 0;
 }
 
@@ -471,9 +471,10 @@ div .membership-card button {
 #mydiscover div address {
     grid-column: 1/2;
     grid-row: 4/5;
+    margin-top: 5px;
     padding-bottom: 5px;
     margin-bottom: 5px;
-    height: auto;
+    
 }
 
 
