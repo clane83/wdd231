@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 console.log("base.js loaded successfully");
 
 const API_KEY = 'appid=39872884ff00973498b0883ade9233e1';
+const API_KEY_MAP = '39872884ff00973498b0883ade9233e1';
 const units   = 'units=imperial';
 
 const ALERT_URL = `https://api.openweathermap.org/data/3.0/onecall?`;
@@ -452,7 +453,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // OWM overlay (clouds_new by default)
   const owmLayer = new ol.layer.Tile({
     source: new ol.source.XYZ({
-      url: `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?${API_KEY}`,
+      url: `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY_MAP}`,
       maxZoom: 19
     }),
     opacity: 0.7

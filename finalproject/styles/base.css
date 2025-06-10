@@ -7,7 +7,7 @@
     --background-color: #c1b8c8;
     --background-color2: #71cff3;
     --accent-color: #fde073;
-    --accent-color: #2e4756;
+    --accent-color2: #2e4756;
     --text-color: #16262e;
 }
 
@@ -30,7 +30,7 @@ body {
 
 header img {
     padding: 10px;
-    max-width: 100px; /* Ensure the image is responsive */
+    max-width: 75px; /* Ensure the image is responsive */
 }
 
 .header-text{
@@ -134,10 +134,40 @@ h1{
     
     }
 
-    h2 {
-        
+    section {
+        border: 1px solid var(--text-color);
+        margin-top: 5px;
+        padding-top: 0px;
+        border-radius: 10px;
+
     }
 
-    #forecast-list {
+    section h2 {
+        background-color: var(--background-color);
+        margin-top: 0px;
+        padding-bottom: 5px;
+        padding-left: 15px;
+        border-radius: 10px 10px 0px 0px;
+    }
 
+    #weather-desc, #weather , #weather-alert, #forecast-list{
+        padding-left: 20px;
+        padding-bottom: 10px;
+    }
+
+    #map {
+        width: 100%;
+        height: 200px;
+        margin-right: 20px;
+      }
+
+      .forecast-card {
+        border-bottom: 1px solid var(--text-color);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .forecast-card:nth-child(6) {
+        border-bottom: 0px;
     }
