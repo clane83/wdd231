@@ -240,7 +240,7 @@ function showPosition(position) {
     });
 }
 
-////////////////////////////////// 5day forecast //////////////////////////////////
+////////////////////////////////// 6day forecast //////////////////////////////////
   async function fetch5DayForecast(lat, lon) {
     try {
       // 5-day/3-hour forecast from OpenWeather
@@ -302,14 +302,17 @@ function showPosition(position) {
       labels.forEach((date, i) => {
         const card = document.createElement("div");
         card.classList.add("forecast-card");
+        const high = document.createElement("p");
+        const low = document.createElement("p");
+        const avg = document.createElement("p");
+        const currentdate = document.createElement("h3");
 
         const textDiv = document.createElement("div");
-        textDiv.innerHTML = `
-          <strong>${date}</strong><br>
-          High: ${highTemps[i]}°F<br>
-          Low: ${lowTemps[i]}°F<br>
-          Avg: ${avgTemps[i]}°F
-        `;
+        high.textContent = `High: ${highTemps[i]}°F`
+        low.textContent = `Low: ${lowTemps[i]}°F`
+        avg.textContent = `Avg: ${avgTemps[i]}°F`
+        currentdate.textContent = date;
+        
 
         const icon = document.createElement("img");
         icon.src = `https://openweathermap.org/img/wn/${icons[i]}@2x.png`;
@@ -317,10 +320,40 @@ function showPosition(position) {
         icon.width = 48;
         icon.height = 48;
 
-        card.appendChild(textDiv);
+        card.appendChild(currentdate);
+        card.appendChild(high);
+        card.appendChild(low);
+        card.appendChild(avg);
         card.appendChild(icon);
         listDiv.appendChild(card);
+        card.addEventListener("click", () => openWarning(highTemps[i]));
       });
+
+      myclose.addEventListener("click", () => {
+        mytemp.close();
+      });
+
+      const mytemp = document.querySelector("#mytemp");
+
+      const mymessage = document.querySelector("#mytemp p");
+
+
+      function openWarning(temp) {
+        let message = "";
+        if (temp > 90) {
+          message = "Wear sun screen to avoid sun burns and dring plenty of water";
+        } else if(temp > 75) {
+          message = "It is a nice day for a bike ride"
+        } else if(temp > 60) {
+          message = "We recommend taking a light jacket"
+        } else {
+          message = "It is cold out there.  Don't forget a jacket."
+        }
+
+        mymessage.innerHTML = message;
+        mytemp.showModal();
+
+      }
 
         
     } catch (err) {
@@ -328,6 +361,8 @@ function showPosition(position) {
       alert("Error fetching 5-day forecast: " + err.message);
     }
   }
+
+
 
 ////////////////////////////////// weather alerts //////////////////////////////////
 function fetchWeatherAlerts() {

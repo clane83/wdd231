@@ -48,18 +48,20 @@
                 <fieldset>
                     <label>Email</label><input type="email" id="email" name="email">
                     <div class="reason-container">
-                        <div class="reason-label">Reason for Request</div>
-                        <div class="reason-options">
+                        <div id="reason-label">Reason for Request</div>
+                        <div id="reason-options">
                             <label><input type="radio" id="new" name="reason" value="new" required>Request New Functionality</label>
                             <label><input type="radio" id="not-working" name="reason" value="not-working">Something Is Not Working</label>
                             <label><input type="radio" id="inaccurate" name="reason" value="inaccurate">Inaccurate Data</label>
                         </div>
                     </div>
-                    <label>Request Description</label>
-                            <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
-                    <input type="hidden" id="hiddenTimestamp" name="timestamp">
+                    <div id="description">
+                        <label>Request Description</label>
+                                <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
+                        <input type="hidden" id="hiddenTimestamp" name="timestamp">
+                        
+                    </div>
                     <input type="submit" value="Send Form">
-                    
                 </fieldset>
             </form>
     </main>

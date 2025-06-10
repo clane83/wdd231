@@ -173,6 +173,11 @@ h1{
         border-bottom: 0px;
     }
 
+    .forecast-card p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
     
     /************************* form ******************************/
     #email {
@@ -194,4 +199,27 @@ h1{
         margin-right: 10px;
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    .reason-container {
+        display: grid;
+        
+    }
+
+
+    #reason-options label{
+        display: grid;
+        grid-template-columns: 44px 1fr;
+
+    }
+
+    #reason-options input {
+        margin-bottom: 0.5rem;
+        padding-left: 8px;
+        grid-column: 1/2;
+
+    }
+
+    #description {
+        display: grid;
     }
