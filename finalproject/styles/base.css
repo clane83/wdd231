@@ -240,8 +240,17 @@ footer p {
 }
 
 /************************* weather images ******************************/
-/* section img {
+#farmer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    place-items: center;
+    
+   
+}
+
+section img {
     margin: 15px;
-    width: 25%;
-    height: auto;
-} */
+    max-width: 95%;
+    margin: 10px;
+}
