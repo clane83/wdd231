@@ -30,8 +30,8 @@
             <nav>
                 <ul class="navigation">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="historical.html" class="active">Historical Weather</a></li>
-                    <li><a href="form.html">Contact Us</a></li>
+                    <li><a href="historical.html">Historical Weather</a></li>
+                    <li><a href="form.html" class="active">Contact Us</a></li>
         
                 </ul>
             </nav>
@@ -43,17 +43,30 @@
             
         </div>
 
-        <form id="history-form">
-            <input type="text" id="history-location" placeholder="Enter city or ZIP code" required>
-            <button type="submit">Load History</button>
-        </form>
-
-        <canvas id="weatherChart" width="600" height="400"></canvas>
+        <div id="contactus">
+            <form method="get" action="thankyou.html" class="form">
+                <fieldset>
+                    <label>Email</label><input type="email" id="email" name="email">
+                    <div class="function-container">
+                        <div class="function-label">Reason for Request</div>
+                        <div class="function-options">
+                            <label><input type="radio" id="new" name="function" value="new" required>Request New Functionality</label>
+                            <label><input type="radio" id="not-working" name="function" value="not-working">Something Is Not Working</label>
+                            <label><input type="radio" id="inaccurate" name="function" value="inaccurate">Inaccurate Data</label>
+                        </div>
+                    </div>
+                    <label>Request Description</label>
+                            <textarea id="description" name="description" placeholder="Tells us about your organization..."></textarea>
+                    <input type="hidden" id="hiddenTimestamp" name="timestamp">
+                    <input type="submit" value="Send Form">
+                    
+                </fieldset>
+            </form>
     </main>
     <footer>
-        
+
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="scripts/historical.js"> defer</script>
+    <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
+    <script type="module" src="scripts/base.js" defer></script>
 </body>
-</html>
+</html>            
