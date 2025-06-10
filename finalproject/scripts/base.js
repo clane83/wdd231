@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 });
 
-console.log("base.js loaded successfully");
+// console.log("base.js loaded successfully");
 
 const API_KEY = 'appid=39872884ff00973498b0883ade9233e1';
 const API_KEY_MAP = '39872884ff00973498b0883ade9233e1';
@@ -63,13 +63,13 @@ function searchByZip(zip) {
       return response.json();
     })
     .then(data => {
-      console.log("API (ZIP) response:", data);
+      // console.log("API (ZIP) response:", data);
 
       // Update lat/lon
       lat = data.coord.lat;
       lon = data.coord.lon;
       
-      console.log("Updated lat/lon from ZIP:", lat, lon);
+      // console.log("Updated lat/lon from ZIP:", lat, lon);
 
       // Recentering the existing map
       if (map) {
@@ -115,7 +115,7 @@ function searchByZip(zip) {
       fetch5DayForecast(lat, lon);
     })
     .catch(error => {
-      console.error("Error fetching by ZIP:", error);
+      // console.error("Error fetching by ZIP:", error);
       document.getElementById("output").innerText =
         `Error: could not fetch data for that ZIP code.`;
     });
@@ -171,13 +171,13 @@ async function searchByCity(cityName) {
     fetch5DayForecast(lat, lon);
   } catch (err) {
     alert("Error searching by city: " + err.message);
-    console.error(err);
+    // console.error(err);
   }
 }
 
 
 function getLocation() {
-  console.log(">>> getLocation() was called");
+  // console.log(">>> getLocation() was called");
   if (!navigator.geolocation) {
     document.getElementById("output").innerText =
       "Geolocation is not supported by this browser.";
@@ -187,11 +187,11 @@ function getLocation() {
 }
 
 function showPosition(position) {
-  console.log(">>> showPosition() was called:", position);
+  // console.log(">>> showPosition() was called:", position);
 
   lat = position.coords.latitude;
   lon = position.coords.longitude;
-  console.log("Updated lat/lon from geolocation:", lat, lon);
+  // console.log("Updated lat/lon from geolocation:", lat, lon);
 
   // Recentering the existing map
   if (map) {
@@ -235,7 +235,7 @@ function showPosition(position) {
       fetch5DayForecast(lat, lon);
     })
     .catch(error => {
-      console.error("Error fetching location data:", error);
+      // console.error("Error fetching location data:", error);
       document.getElementById("output").innerText =
         "Error: could not fetch weather data for your location.";
     });
@@ -358,7 +358,7 @@ function showPosition(position) {
 
         
     } catch (err) {
-      console.error("fetch5DayForecast() error:", err);
+      // console.error("fetch5DayForecast() error:", err);
       alert("Error fetching 5-day forecast: " + err.message);
     }
   }
@@ -368,7 +368,7 @@ function showPosition(position) {
 ////////////////////////////////// weather alerts //////////////////////////////////
 function fetchWeatherAlerts() {
   if(lat === null || lon === null) {
-    console.warn("Cannot fetch alerts: lat/long not seen yet.");
+    // console.warn("Cannot fetch alerts: lat/long not seen yet.");
     return;
   }
 
@@ -381,7 +381,7 @@ function fetchWeatherAlerts() {
       return response.json();
     })
     .then(data => {
-      console.log("API (Alerts) response:", data);
+      // console.log("API (Alerts) response:", data);
 
       // Check if `alerts` array exists
       const alertDiv = document.getElementById("weather-alert");
@@ -390,14 +390,14 @@ function fetchWeatherAlerts() {
         const firstAlert = data.alerts[0];
         alertDiv.innerText =
           `⚠️ ${firstAlert.event}: ${firstAlert.description}`;
-          console.log("Weather alert:" + firstAlert.event + " - " + firstAlert.description);
+          // console.log("Weather alert:" + firstAlert.event + " - " + firstAlert.description);
       } else {
         alertDiv.innerText = "No weather alerts for your location.";
       }
       
     })
     .catch(error => {
-      console.error("Error fetching weather alerts:", error);
+      // console.error("Error fetching weather alerts:", error);
       document.getElementById("weather-alert").innerText =
         "Error: could not fetch weather alerts.";
     });
@@ -408,7 +408,7 @@ function fetchWeatherAlerts() {
 function fetchCurrentDescription() {
   // If lat/lon are not set, skip
   if (lat === null || lon === null) {
-    console.warn("Cannot fetch current description: lat/lon not set yet.");
+    // console.warn("Cannot fetch current description: lat/lon not set yet.");
     return;
   }
 
@@ -442,7 +442,7 @@ function fetchCurrentDescription() {
 
 
 function showError(error) {
-  console.log(">>> showError() was called:", error);
+  // console.log(">>> showError() was called:", error);
   switch (error.code) {
     case error.PERMISSION_DENIED:
       alert("User denied the request for Geolocation.");
@@ -466,7 +466,7 @@ function showError(error) {
 ///////////////////////////////// window permissions /////////////////////////////
 // This runs once, on page load, to create the map:
 window.addEventListener("DOMContentLoaded", () => {
-  console.log("Window: DOM is ready");
+  // console.log("Window: DOM is ready");
 
 
   //////////////////////////////// add weather map functionality /////////////////////////////

@@ -23,7 +23,7 @@ document.getElementById("history-form").addEventListener("submit", async (e) => 
   e.preventDefault();
   let location = document.getElementById("history-location").value.trim();
 
-  console.log("Form submitted for location:", location);
+  // console.log("Form submitted for location:", location);
 
 
   // If ZIP code, add country code
@@ -37,8 +37,8 @@ document.getElementById("history-form").addEventListener("submit", async (e) => 
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log("URL:", url);
-    console.log("Data:", data);
+    // console.log("URL:", url);
+    // console.log("Data:", data);
 
     if (!data.days || !data.days.length) {
       alert("No historical data found for this location.");
