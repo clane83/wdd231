@@ -19,7 +19,7 @@ body {
 /************************* Header ******************************/
 
 .header-container {
-    background-color: var(--header-background-color);
+    background-color: var(--background-color);
     display: flex;
     flex-direction: row; /* Stack elements vertically for small screens */
     align-items: center;
@@ -48,7 +48,6 @@ h1{
     padding-top: 0;
     margin-top: 0;
 }
-
 
 #menu {
     font-size: 1.5rem;
@@ -105,16 +104,16 @@ h1{
 }
 
 .navigation a:hover {
-    color: var(--nav-background-color);
-    background-color: var(--hover-background-color);
+    color: var(--text-color);
+    background-color: var(--accent-color);
     border-radius: 5px;
     
 
 }
 
 .navigation a.active {
-    color: var(--nav-background-color);
-    background: var(--hover-background-color);
+    color: var(--text-color);
+    background: var(--background-color2);
     border-radius: 4px;
     padding: 0.25em 0.75em;
 }
@@ -133,4 +132,12 @@ h1{
         /* padding:10px */
     
     
+    }
+
+    h2 {
+        
+    }
+
+    #forecast-list {
+
     }

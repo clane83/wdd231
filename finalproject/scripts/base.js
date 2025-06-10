@@ -295,36 +295,33 @@ function showPosition(position) {
         return;
       }
 
-      listDiv.innerHTML = labels
-        .map(
-          (date, i) => `
-        <div
-          style="
-            border: 1px solid #ccc;
-            padding: 0.6rem;
-            margin-bottom: 0.6rem;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-          "
-        >
-          <div style="flex: 1;">
-            <strong>${date}</strong><br />
-            High: ${highTemps[i]}°F<br />
-            Low: ${lowTemps[i]}°F<br />
-            Avg: ${avgTemps[i]}°F
-          </div>
-          <div>
-            <img
-              src="https://openweathermap.org/img/wn/${icons[i]}@2x.png"
-              alt="weather icon"
-              style="width:48px; height:48px;"
-            />
-          </div>
-        </div>
-      `
-        )
-        .join("");
+      
+      listDiv.innerHTML = ""; // Clear previous cards
+
+      labels.forEach((date, i) => {
+        const card = document.createElement("div");
+        card.classList.add("forecast-card");
+
+        const textDiv = document.createElement("div");
+        textDiv.innerHTML = `
+          <strong>${date}</strong><br>
+          High: ${highTemps[i]}°F<br>
+          Low: ${lowTemps[i]}°F<br>
+          Avg: ${avgTemps[i]}°F
+        `;
+
+        const icon = document.createElement("img");
+        icon.src = `https://openweathermap.org/img/wn/${icons[i]}@2x.png`;
+        icon.alt = "weather icon";
+        icon.width = 48;
+        icon.height = 48;
+
+        card.appendChild(textDiv);
+        card.appendChild(icon);
+        listDiv.appendChild(card);
+      });
+
+        
     } catch (err) {
       console.error("fetch5DayForecast() error:", err);
       alert("Error fetching 5-day forecast: " + err.message);
