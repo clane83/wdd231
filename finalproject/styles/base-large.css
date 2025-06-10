@@ -1,5 +1,5 @@
 @media screen and (min-width: 500px) {
-    .header-container {
+    #header-container {
         display: grid; /* Use grid layout for larger screens */
         grid-template-columns: auto 1fr;
         grid-template-rows: 1fr 50px;
