@@ -1,14 +1,31 @@
 /* https://coolors.co/c1b8c8-71cff3-fde073-2e4756-16262e */
+:root {
+    --font-family: "Noto Sans", sans-serif;
+    --medium-font-weight: 400;
+    --larger-font-weight: 600;
+    --larger-font-style: semibold;
+    --background-color: #c1b8c8;
+    --background-color2: #71cff3;
+    --accent-color: #fde073;
+    --accent-color: #2e4756;
+    --text-color: #16262e;
+}
 
+body {
+    font-family: var(--font-family);
+    font-weight: var(--larger-font-weight);
+}
+
+/************************* Header ******************************/
 
 .header-container {
-    /* background-color: var(--header-background-color); */
+    background-color: var(--header-background-color);
     display: flex;
     flex-direction: row; /* Stack elements vertically for small screens */
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 header img {
@@ -37,7 +54,7 @@ h1{
     font-size: 1.5rem;
     border: 0;
     background: none;
-    /* color: var(--font-color); */
+    color: var(--font-color);
     cursor: pointer;
     position: absolute;
     top: 1rem;
@@ -59,7 +76,7 @@ h1{
     padding: 0;
     align-items: center;
     font-size: medium;
-    /* background-color: var(--nav-background-color); */
+    background-color: var(--nav-background-color);
     /* position: absolute; */
     top: 30px;
     right: 0;
@@ -77,7 +94,7 @@ h1{
     padding: 1rem;
     text-align: center;
     text-decoration: none;
-    /* color: var(--font-color); */
+    color: var(--font-color);
     width: 125px;
     height: 50px;
     align-content: center;
@@ -88,24 +105,32 @@ h1{
 }
 
 .navigation a:hover {
-    /* color: var(--nav-background-color);
-    background-color: var(--hover-background-color); */
+    color: var(--nav-background-color);
+    background-color: var(--hover-background-color);
     border-radius: 5px;
     
 
 }
 
 .navigation a.active {
-    /* color: var(--nav-background-color);
-    background: var(--hover-background-color); */
+    color: var(--nav-background-color);
+    background: var(--hover-background-color);
     border-radius: 4px;
     padding: 0.25em 0.75em;
 }
 
-
-
-#map {
-        margin: 10px;
-        max-width: 1200px;
-        height: 200px;
+/************************* Main ******************************/
+.hero {
+    position: relative;
+    }
+    
+    .hero img{
+        width: 100%;
+        max-height: 250px;
+        display: block;
+        height: auto;
+        padding-bottom: 20px;
+        /* padding:10px */
+    
+    
     }
