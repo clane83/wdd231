@@ -92,6 +92,7 @@
     
     .forecast-card {
         border-right: 1px solid var(--text-color);
+        border-bottom: 0px;;
         padding-left: 10px;
         padding-right: 10px;
         text-align: center;
@@ -99,6 +100,7 @@
 
     .forecast-card:nth-child(6) {
         border-right: 0px;
+
     }
 
 

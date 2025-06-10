@@ -152,6 +152,7 @@ h1{
 
     #weather-desc, #weather , #weather-alert, #forecast-list{
         padding-left: 20px;
+        padding-right: 20px;
         padding-bottom: 10px;
     }
 
@@ -161,7 +162,7 @@ h1{
         margin-right: 20px;
       }
 
-      .forecast-card {
+    .forecast-card {
         border-bottom: 1px solid var(--text-color);
         padding-top: 10px;
         padding-bottom: 10px;
