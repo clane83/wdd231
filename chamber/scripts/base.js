@@ -570,7 +570,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         closeModalButton.addEventListener("click", () => modal.close());
 }
-      
+
+
+//Display last visit message on discover page
+    const messageElement = document.getElementById("visit-message");
+    const lastVisit = localStorage.getItem("lastVisit");
+    const now = Date.now();
+
+    let message = "";
+
+    if (!lastVisit) {
+    // First visit
+    message = "Welcome! Let us know if you have any questions.";
+    } else {
+    const millisecondsInADay = 1000 * 60 * 60 * 24;
+    const daysDiff = Math.floor((now - Number(lastVisit)) / millisecondsInADay);
+
+    if (daysDiff < 1) {
+        message = "Back so soon! Awesome!";
+    } else if (daysDiff === 1) {
+        message = "You last visited 1 day ago.";
+    } else {
+        message = `You last visited ${daysDiff} days ago.`;
+    }
+    }
+
+    messageElement.textContent = message;
+    localStorage.setItem("lastVisit", now.toString());
+
 
       
 
