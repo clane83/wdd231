@@ -138,6 +138,7 @@ h1{
         border: 1px solid var(--text-color);
         margin-top: 5px;
         padding-top: 0px;
+        margin-bottom: 10px;
         border-radius: 10px;
 
     }
@@ -223,3 +224,16 @@ h1{
     #description {
         display: grid;
     }
+
+/************************* form ******************************/
+footer {
+    background-color: var(--background-color);
+    text-align: center;
+    padding-top: 20px;
+    
+}
+
+footer p {
+    margin-top: 0;
+    margin-bottom: 2px;
+}
