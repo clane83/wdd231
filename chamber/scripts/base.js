@@ -633,6 +633,7 @@ if (document.querySelector("#mydiscover")) {
         // placeAddress.textContent = place.address;
         img.src = place.img;
         img.alt = `${place.place} image`;
+        img.classList.add("hover-image");
         button.textContent = "Learn More";
         
         card.appendChild(placeName);
