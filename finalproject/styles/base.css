@@ -120,11 +120,11 @@ h1{
 }
 
 /************************* Main ******************************/
-.hero {
+#hero {
     position: relative;
     }
     
-.hero img{
+#hero img{
     width: 100%;
     max-height: 250px;
     display: block;
