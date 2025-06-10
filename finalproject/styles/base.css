@@ -124,16 +124,16 @@ h1{
     position: relative;
     }
     
-    .hero img{
-        width: 100%;
-        max-height: 250px;
-        display: block;
-        height: auto;
-        padding-bottom: 20px;
-        /* padding:10px */
+.hero img{
+    width: 100%;
+    max-height: 250px;
+    display: block;
+    height: auto;
+    padding-bottom: 20px;
+    /* padding:10px */
     
     
-    }
+}
 
     section {
         border: 1px solid var(--text-color);
@@ -238,3 +238,10 @@ footer p {
     margin-top: 0;
     margin-bottom: 2px;
 }
+
+/************************* weather images ******************************/
+/* section img {
+    margin: 15px;
+    width: 25%;
+    height: auto;
+} */
