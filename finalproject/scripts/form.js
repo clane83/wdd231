@@ -9,10 +9,30 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonSelector: "#menu",
     navSelector: ".navigation"
   });
-  
-});
 
-// Display form data on thankyou.html
+  const form = document.querySelector("form");
+  if (form) {
+    form.addEventListener("submit", (formEntry) => {
+      formEntry.preventDefault(); 
+
+      const email = document.getElementById("email").value;
+      const reason = document.querySelector('input[name="reason"]:checked')?.value || "";
+      const description = document.getElementById("description").value;
+      const timestamp = new Date().toISOString();
+
+      const formData = {
+        email,
+        reason,
+        description,
+        timestamp,
+      };
+
+      localStorage.setItem("formData", JSON.stringify(formData));
+      window.location.href = "thankyou.html"; 
+    });
+  }
+
+  // Display form data on thankyou.html
     const displayDiv = document.getElementById('formDataDisplay');
     if (displayDiv) {
         const formData = JSON.parse(localStorage.getItem('formData'));
@@ -25,3 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
     }
+  
+});
+
